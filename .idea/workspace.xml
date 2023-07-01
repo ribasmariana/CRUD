@@ -4,11 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3516d36e-5d9f-4e5e-94dd-e0cae940faa2" name="Changes" comment="Iniciando o projeto" />
+    <list default="true" id="3516d36e-5d9f-4e5e-94dd-e0cae940faa2" name="Changes" comment="Iniciando o projeto">
+      <change afterPath="$PROJECT_DIR$/src/Cadastra.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Categoria.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Cidade.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/RedeSocial.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TipoProjeto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -17,7 +31,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2RzAL81X21ZasKYeHRWb0KZxzqS" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -44,7 +60,21 @@
       <option name="project" value="LOCAL" />
       <updated>1688243010862</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Iniciando o projeto">
+      <created>1688243059606</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1688243059606</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Iniciando o projeto">
+      <created>1688243271577</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1688243271577</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
