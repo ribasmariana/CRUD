@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3516d36e-5d9f-4e5e-94dd-e0cae940faa2" name="Changes" comment="Iniciando o projeto">
-      <change afterPath="$PROJECT_DIR$/src/Cadastra.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Categoria.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Cidade.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/RedeSocial.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TipoProjeto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Categoria.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Categoria.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TipoProjeto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TipoProjeto.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,12 +34,6 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
-  }
-}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
