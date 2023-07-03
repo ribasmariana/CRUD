@@ -1,3 +1,5 @@
+package model;
+
 public class Cidade {
     private Integer id;
     private String nome;
@@ -27,14 +29,7 @@ public class Cidade {
         this.uf = uf;
     }
 
-    public Cidade(Integer id, String nome, String uf) {
-        this.id = id;
-        this.nome = nome;
-        this.uf = uf;
-    }
 
-    public Cidade(String nome, String uf) {
-        this.nome = nome;
-        this.uf = uf;
-    }
+
+
 }
