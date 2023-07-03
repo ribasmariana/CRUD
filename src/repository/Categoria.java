@@ -1,4 +1,4 @@
-//ISTO SERÁ UMA ENUM
+package repository;//ISTO SERÁ UMA ENUM
 
 public enum Categoria {
     TECNOLOGIA("Tecnologia"),

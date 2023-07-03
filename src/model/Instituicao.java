@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +80,7 @@ public class Instituicao {
 
     @Override
     public String toString() {
-        return "Instituicao{" +
+        return "model.Instituicao{" +
                 "codigo=" + codigo +
                 ", nome='" + nome + '\'' +
                 ", rua='" + rua + '\'' +
