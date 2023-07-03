@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3516d36e-5d9f-4e5e-94dd-e0cae940faa2" name="Changes" comment="Iniciando o projeto">
-      <change beforePath="$PROJECT_DIR$/src/Categoria.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Categoria.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TipoProjeto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TipoProjeto.java" afterDir="false" />
+    <list default="true" id="3516d36e-5d9f-4e5e-94dd-e0cae940faa2" name="Changes" comment="Enums categoria e tipos de projeto">
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +32,10 @@
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -64,11 +67,30 @@
       <option name="project" value="LOCAL" />
       <updated>1688243271577</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Enums categoria e tipos de projeto">
+      <created>1688424783988</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688424783988</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Iniciando o projeto" />
-    <option name="LAST_COMMIT_MESSAGE" value="Iniciando o projeto" />
+    <MESSAGE value="Enums categoria e tipos de projeto" />
+    <option name="LAST_COMMIT_MESSAGE" value="Enums categoria e tipos de projeto" />
   </component>
 </project>
