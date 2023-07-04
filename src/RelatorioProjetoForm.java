@@ -59,7 +59,6 @@ public class RelatorioProjetoForm extends JPanel {
             for (Projeto projeto : projetos) {
                 vetorDados.add(projeto);
             }
-
             frame.getContentPane().add(new RelatorioProjetoForm(vetorDados));
             frame.pack();
             frame.setVisible(true);

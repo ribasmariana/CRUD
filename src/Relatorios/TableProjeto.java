@@ -1,7 +1,5 @@
 package Relatorios;
-
 import model.Projeto;
-
 import javax.swing.table.AbstractTableModel;
 import java.util.Vector;
 

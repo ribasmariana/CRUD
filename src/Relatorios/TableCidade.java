@@ -12,7 +12,6 @@ public class TableCidade extends AbstractTableModel {
     public static final int INDEX_NOME = 1;
     public static final int INDEX_UF = 2;
     public static final int INDEX_ESCONDIDO = 3;
-
     protected String[] nomeColunas;
     protected Vector<Cidade> vetorDados;
 
