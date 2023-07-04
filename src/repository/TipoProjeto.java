@@ -27,6 +27,24 @@ public enum TipoProjeto {
 
     }
 
+    public static TipoProjeto getTipoById(Integer opcao) {
+        if (opcao == 1) {
+            return PESQUISA;
+        } else if (opcao == 2) {
+            return EXTENSAO;
+        }  else if (opcao == 3) {
+            return GRADUACAO;
+        }  else if (opcao == 4) {
+             return POS_GRADUACAO;
+        }  else if (opcao == 5) {
+             return MESTRADO;
+        }  else if (opcao == 6) {
+             return DOUTORADO;
+            } else {
+            return STARTUP;
+        }
+    }
+
     public String getDescricao() {
         return descricaoTipo;
     }

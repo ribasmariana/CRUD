@@ -13,7 +13,12 @@ public class Projeto {
     private TipoProjeto tipo;
     private Categoria categoria;
 
-    public Projeto(String nome, String descricao, String coordenacao, Instituicao instituicao, TipoProjeto tipo, Categoria categoria) {
+    public Projeto(){
+
+    }
+
+    public Projeto(String nome, String descricao, String coordenacao, Instituicao instituicao,
+                   TipoProjeto tipo, Categoria categoria) {
 
         this.nome = nome;
         this.descricao = descricao;
