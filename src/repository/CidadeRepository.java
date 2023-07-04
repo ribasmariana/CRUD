@@ -6,6 +6,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static repository.CidadeDAO.cidades;
+
 public class CidadeRepository {
 
     public Connection getConnection() throws ClassNotFoundException, SQLException {
@@ -21,8 +23,8 @@ public class CidadeRepository {
         Connection connection = getConnection();
 
         PreparedStatement stmt = connection.prepareStatement("insert into " +
-                "seguros values(?, ?, ?, ?, ?, ?)");
-        stmt.setInt(1, cidade.getId().intValue());
+                "cidade values(null, ?, ?)");
+        //stmt.setInt(1, cidade.getId().intValue());
         stmt.setString(2, cidade.getNome());
         stmt.setString(3, cidade.getUf());
 
@@ -36,58 +38,51 @@ public class CidadeRepository {
         List<Cidade> pessoas = new ArrayList<>();
         Connection connection = getConnection();
 
-        PreparedStatement stmt = connection.prepareStatement("select * from pessoa WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("select * from cidade WHERE id = ?");
         stmt.setLong(1, id);
         ResultSet resultSet = stmt.executeQuery();
 
         while (resultSet.next()) {
 
                 Cidade cidade = new Cidade();
-                Cidade.setId(resultSet.getLong(1));
-                pessoaFisica.setNome(resultSet.getString(2));
-                pessoaFisica.setCpf(resultSet.getString(3));
-                pessoaFisica.setTipo(TipoPessoa.FISICA);
-                pessoas.add(pessoaFisica);
+                cidade.setId(resultSet.getInt(1));
+                cidade.setNome(resultSet.getString(2));
+                cidade.setUf(resultSet.getString(3));
+
+                cidades.add(cidade);
 
 
 
         }
         connection.close();
-        return pessoas;
+        return cidades;
     }
 
-    public List<Seguro> busca() throws SQLException, ClassNotFoundException {
-        List<Seguro> seguros = new ArrayList<>();
+    public List<Cidade> busca() throws SQLException, ClassNotFoundException {
+        List<Cidade> cidades1 = new ArrayList<>();
         Connection connection = getConnection();
 
-        PreparedStatement stmt = connection.prepareStatement("select * from seguros");
+        PreparedStatement stmt = connection.prepareStatement("select * from cidade");
         ResultSet resultSet = stmt.executeQuery();
 
         while (resultSet.next()) {
-            Seguro seguro = new Seguro();
-            seguro.setId(resultSet.getLong(1));
 
-            //FK
-            PessoaRepository pessoaRepository = new PessoaRepository();
-            seguro.setSegurado(pessoaRepository.buscaPorId(resultSet.getLong(2)).get(0));
+                Cidade cidade = new Cidade();
+                cidade.setId(resultSet.getInt(1));
+                cidade.setNome(resultSet.getString(2));
+                cidade.setUf(resultSet.getString(3));
 
-            //FK
-            SeguradoraRepository seguradoraRepository = new SeguradoraRepository();
-            seguro.setSeguradora(seguradoraRepository.buscaPorId(resultSet.getLong(3)).get(0));
+                cidades.add(cidade);
 
-            seguro.setTipo(TipoSeguro.getTipoById(resultSet.getInt(4)));
-            seguro.setValorApolice(resultSet.getBigDecimal(5));
-            seguro.setValorPremio(resultSet.getBigDecimal(6));
-            seguros.add(seguro);
         }
         connection.close();
-        return seguros;
+        return cidades;
     }
 
 
     public Integer proximoId() throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
-        PreparedStatement stmt = connection.prepareStatement("select max(id) from seguros");
+        PreparedStatement stmt = connection.prepareStatement("select max(id) from cidade");
         ResultSet resultSet = stmt.executeQuery();
 
         while (resultSet.next()) {
@@ -97,17 +92,16 @@ public class CidadeRepository {
     }
 
 
-    public void update(Seguro seguro) throws SQLException, ClassNotFoundException {
+    public void update(Cidade cidade) throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
 
-        PreparedStatement stmt = connection.prepareStatement("update seguros " +
-                "SET segurado = ?, seguro = ?, tipo = ?, valor_apolice = ?, valor_premio = ? WHERE id = ?");
-        stmt.setInt(1, seguro.getSegurado().getId().intValue());
-        stmt.setInt(2, seguro.getSeguradora().getId().intValue());
-        stmt.setInt(3, seguro.getTipo().ordinal());
-        stmt.setBigDecimal(4, seguro.getValorApolice());
-        stmt.setBigDecimal(5, seguro.getValorPremio());
-        stmt.setInt(6, seguro.getId().intValue());
+        PreparedStatement stmt = connection.prepareStatement("update cidade " +
+                "SET  nome = ?, uf = ? WHERE id = ?");
+
+        stmt.setString(1, cidade.getNome());
+        stmt.setString(2, cidade.getUf());
+        stmt.setInt(3, cidade.getId().intValue());
+
 
         int i = stmt.executeUpdate();
         System.out.println(i + " linhas atualizadas");
@@ -115,11 +109,11 @@ public class CidadeRepository {
     }
 
 
-    public void delete(Seguro seguro) throws SQLException, ClassNotFoundException {
+    public void delete(Cidade cidade) throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
-        PreparedStatement stmt = connection.prepareStatement("DELETE FROM seguros" +
+        PreparedStatement stmt = connection.prepareStatement("DELETE FROM cidade" +
                 " WHERE id = ?");
-        stmt.setInt(1, seguro.getId().intValue());
+        stmt.setInt(1, cidade.getId().intValue());
         stmt.executeUpdate();
         connection.close();
     }
