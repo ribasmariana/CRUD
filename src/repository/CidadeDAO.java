@@ -22,7 +22,7 @@ public final class CidadeDAO implements IGenericDAO<Cidade>{
             if (cidade.getId() != null) {
                 cidadeRepository.update(cidade);
             } else {
-                cidade.setId(cidadeRepository.proximoId().longValue());
+                cidade.setId(cidadeRepository.proximoId());
                 cidadeRepository.insere(cidade);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -34,17 +34,41 @@ public final class CidadeDAO implements IGenericDAO<Cidade>{
     }
 
     @Override
-    public void remover(Cidade objeto) throws SQLException, ClassNotFoundException {
-
+    public void remover(Cidade cidade) throws SQLException, ClassNotFoundException {
+        CidadeRepository cidadeRepository = new CidadeRepository();
+        cidadeRepository.delete(cidade);
     }
-
     @Override
-    public List<Cidade> buscarTodos() throws SQLException, ClassNotFoundException {
-        return null;
-    }
+    public List<Cidade> buscarTodos() {
+        System.out.println(cidades);
 
+        CidadeRepository cidadeRepository = new CidadeRepository();
+        try {
+            cidades = cidadeRepository.busca();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return cidades;
+    }
     @Override
     public List<Cidade> buscarPorNome(String nome) {
-        return null;
+        List<Cidade> cidadesFiltradas = new ArrayList<>();
+        for (Cidade cidade : cidades) {
+            if (cidade.getNome().contains(nome)) {
+                cidadesFiltradas.add(cidade);
+            }
+        }
+        return cidadesFiltradas;
+    }
+    public Object[] findCidadesInArray() {
+        List<Cidade> cidades1 = buscarTodos();
+        List<String> cidadesNomes = new ArrayList<>();
+
+        for (Cidade cidade : cidades1) {
+            cidadesNomes.add(cidade.getNome());
+        }
+
+        return cidadesNomes.toArray();
     }
 }
