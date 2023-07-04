@@ -15,6 +15,18 @@ public enum TipoProjeto {
         this.descricaoTipo = descricaoTipo;
     }
 
+    public static String getEnumByString(String code) {
+        for (TipoProjeto e : TipoProjeto.values()) {
+            if (e.descricaoTipo.equals(code)) {
+                return e.name();
+            }
+        }
+        return null;
+    }
+    public static void add(TipoProjeto escolheTipo) {
+
+    }
+
     public String getDescricao() {
         return descricaoTipo;
     }
