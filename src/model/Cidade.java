@@ -5,6 +5,14 @@ public class Cidade {
     private String nome;
     private String uf;
 
+    public Cidade(){
+
+    }
+    public Cidade(String nome, String uf) {
+        this.nome = nome;
+        this.uf = uf;
+    }
+
     public Integer getId() {
         return id;
     }

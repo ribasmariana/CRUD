@@ -12,8 +12,22 @@ public class Instituicao {
     private String numero;
     private String telefone;
     private Cidade cidade;
-    private List redesSociais = new ArrayList<RedeSocial>();
+    private ArrayList redesSociais = new ArrayList<RedeSocial>();
 
+    public Instituicao(){
+
+    }
+
+    public Instituicao(String nome, String rua, String bairro, String numero, String telefone,
+                       Cidade cidade, ArrayList redesSociais) {
+        this.nome = nome;
+        this.rua = rua;
+        this.bairro = bairro;
+        this.numero = numero;
+        this.telefone = telefone;
+        this.cidade = cidade;
+        this.redesSociais = redesSociais;
+    }
 
     public Integer getCodigo() {
         return codigo;
@@ -63,12 +77,12 @@ public class Instituicao {
         this.telefone = telefone;
     }
 
-    public List getRedesSociais() {
+    public ArrayList getRedesSociais() {
         return redesSociais;
     }
 
     public void setRedesSociais(List redesSociais) {
-        this.redesSociais = redesSociais;
+        this.redesSociais = (ArrayList) redesSociais;
     }
 
     public Cidade getCidade() {

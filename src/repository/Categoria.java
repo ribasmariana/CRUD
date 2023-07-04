@@ -14,6 +14,22 @@ public enum Categoria {
         this.descricaoCategoria = descricaoCategoria;
     }
 
+    public static Categoria getCategoriaById(Integer opcao) {
+        if (opcao == 1) {
+            return TECNOLOGIA;
+        } else if (opcao == 2) {
+            return ENGENHARIA;
+        }  else if (opcao == 3) {
+            return AGRONOMIA;
+        }  else if (opcao == 4) {
+            return SAUDE;
+        }  else if (opcao == 5) {
+            return EDUCACAO;
+        } else {
+            return SOCIAL;
+        }
+    }
+
     public static String getEnumByString(String code) {
         for (Categoria e : Categoria.values()) {
             if (e.descricaoCategoria.equals(code)) {
