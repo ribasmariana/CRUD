@@ -1,12 +1,9 @@
 import model.Cidade;
 import model.Instituicao;
 import model.Projeto;
-import repository.Categoria;
-import repository.ProjetoDAO;
-import repository.TipoProjeto;
+import repository.*;
 
 import javax.swing.*;
-import java.sql.SQLException;
 import java.util.List;
 
 public class Main {
@@ -50,6 +47,8 @@ public class Main {
                 }
         }
     }
+
+    /////////////////////////////////////
 
     public static void chamaMenuCidade() {
             String[] opcoesMenuCidade = {"Cadastrar", "Alterar", "Excluir", "Gerar relatório", "Voltar"};
@@ -97,7 +96,7 @@ public class Main {
         String initialSelectionCidade = (String) selectionValuesCidades[0];
         Object selectionCidade = JOptionPane.showInputDialog(null, "Selecione a cidade que deseja alterar",
                 "Cidades", JOptionPane.QUESTION_MESSAGE, null, selectionValuesCidades, selectionValuesCidades);
-        List<Cidade> cidades = CidadeDAO.buscarPorId((String) selectionCidade);
+        List<Cidade> cidades = CidadeDAO.buscarPorNome((String) selectionCidade);
         Cidade cidade = cidades.get(0);
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome da cidade", cidade.getNome());
@@ -119,7 +118,7 @@ public class Main {
     }
 
     private static void chamaExcluirCidade() {
-        Object[] selectionValuesCidades = CidadeDAO.buscaTodos().toArray(new Cidade[0]);
+        Object[] selectionValuesCidades = CidadeDAO.buscarTodos().toArray(new Cidade[0]);
         Object selectionCidades = JOptionPane.showInputDialog(null, "Selecione a cidade que deseja remover:",
                 "Remover Cidade", JOptionPane.DEFAULT_OPTION, null, selectionValuesCidades, null);
 
@@ -133,7 +132,7 @@ public class Main {
     }
 
     private static void chamaRelatorioCidade() {
-        List<Cidade> cidades = CidadeDAO.buscaTodos();
+        List<Cidade> cidades = CidadeDAO.buscarTodos();
         RelatorioCidadeForm.emitirRelatorio(cidades);
     }
 
@@ -210,7 +209,7 @@ public class Main {
             chamaCadastroProjeto();
         }
 
-        List<Instituicao> instituicaos = InstituicaoDAO.buscaTodos();
+        List<Instituicao> instituicaos = InstituicaoDAO.buscarTodos();
 
         if (instituicaos.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Nenhuma instituição cadastrada!");
@@ -246,7 +245,7 @@ public class Main {
         Object selectionProjeto = JOptionPane.showInputDialog(null, "Selecione o projeto que deseja alterar",
                 "Projetos", JOptionPane.QUESTION_MESSAGE, null, selectionValuesProjetos, selectionValuesProjetos);
 
-        List<Projeto> projetos = ProjetoDAO.buscarPorId((String) selectionProjeto);
+        List<Projeto> projetos = ProjetoDAO.buscarPorNome((String) selectionProjeto);
         Projeto projeto = projetos.get(0);
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome do projeto", projeto.getNome());
@@ -296,7 +295,7 @@ public class Main {
             chamaCadastroProjeto();
         }
 
-        List<Instituicao> instituicaos = InstituicaoDAO.buscaTodos();
+        List<Instituicao> instituicaos = InstituicaoDAO.buscarTodos();
 
         if (instituicaos.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Nenhuma instituição cadastrada!");
@@ -325,7 +324,7 @@ public class Main {
         chamaMenuPrincipal();
 }
 
-    private static void chamaExcluirProjeto() throws SQLException, ClassNotFoundException {
+    private static void chamaExcluirProjeto(){
 
         Object[] selectionValuesProjetos = ProjetoDAO.buscarTodos().toArray(new Projeto[0]);
         Object selectionProjetos = JOptionPane.showInputDialog(null, "Selecione o projeto que deseja remover:",
@@ -344,5 +343,31 @@ public class Main {
         List<Projeto> projetos = ProjetoDAO.buscarTodos();
         RelatorioProjetoForm.emitirRelatorio(projetos);
     }
+
+    ////////////////////////////////
+
+    public static void chamaMenuInstituicoes() {
+        String[] opcoesMenuInstituicoes = {"Cadastrar", "Alterar", "Excluir", "Gerar relatório", "Voltar"};
+        int menuInstituicoes = JOptionPane.showOptionDialog(null, "Escolha o processo que deseja realizar",
+                "INSTITUIÇÕES",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesMenuInstituicoes, opcoesMenuInstituicoes[0]);
+
+        switch (menuInstituicoes) {
+            case 0:
+                chamaCadastroInstituicao();
+                break;
+            case 1:
+                chamaAlterarInstituicao();
+                break;
+            case 2:
+                chamaExcluirInstituicao();
+                break;
+            case 3:
+                chamaRelatorioInstituicao();
+                break;
+        }
+    }
+
+
 
 }
