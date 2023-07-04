@@ -21,6 +21,10 @@ public class RedeSocial {
         this.descricao = descricao;
     }
 
+
+   public RedeSocial(){
+
+   }
     public RedeSocial(Integer id, String descricao) {
         this.id = id;
         this.descricao = descricao;
