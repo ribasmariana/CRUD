@@ -1,9 +1,12 @@
+import model.Cidade;
 import model.Instituicao;
 import model.Projeto;
 import repository.Categoria;
+import repository.ProjetoDAO;
 import repository.TipoProjeto;
 
 import javax.swing.*;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Main {
@@ -70,7 +73,7 @@ public class Main {
             }
     }
 
-    private static void chamaCadastroCidade() {
+    private static Cidade chamaCadastroCidade() {
 
             String nome = JOptionPane.showInputDialog(null, "Informe o nome da cidade");
             if (nome == null) {
@@ -82,13 +85,14 @@ public class Main {
                 chamaCadastroCidade();
             }
 
-            Cidade cidade = new Cidade (nome, uf);
-            CidadeDAO.salvar(cidade);
-            JOptionPane.showMessageDialog(null, "Cidade cadastrada com sucesso!");
-            chamaMenuPrincipal();
+            Cidade cidade = new Cidade();
+            cidade.setNome(nome);
+            cidade.setUf(uf);
+            return cidade;
+
         }
 
-    private static void chamaAlterarCidade() {
+    private static Cidade chamaAlterarCidade() {
         Object[] selectionValuesCidades = CidadeDAO.findCidadesInArray();
         String initialSelectionCidade = (String) selectionValuesCidades[0];
         Object selectionCidade = JOptionPane.showInputDialog(null, "Selecione a cidade que deseja alterar",
@@ -106,9 +110,9 @@ public class Main {
             chamaCadastroCidade();
         }
 
-        cidade.setNome();
-        cidade.setUf();
-        CidadeDAO.salvar(cidade);
+        cidade.setNome(nome);
+        cidade.setUf(uf);
+        return cidade;
 
         JOptionPane.showMessageDialog(null, "Cadastro de cidade alterado com sucesso!");
         chamaMenuPrincipal();
@@ -122,6 +126,7 @@ public class Main {
         if (selectionCidades != null) {
             Cidade cidadeSelecionada = (Cidade) selectionCidades;
             CidadeDAO.remover(cidadeSelecionada);
+
             JOptionPane.showMessageDialog(null, "Cidade removida com sucesso!");
             chamaMenuPrincipal();
         }
@@ -223,8 +228,14 @@ public class Main {
             chamaMenuPrincipal();
         }
 
-        Projeto projeto = new Projeto (nome, descricao, coordenacao, tipo, categoria, instituicao);
-        ProjetoDAO.salvar(projeto);
+        Projeto projeto = new Projeto();
+        projeto.setNome(nome);
+        projeto.setTipo(tipoSelecionado);
+        projeto.setDescricao(descricao);
+        projeto.setCoordenacao(coordenacao);
+        projeto.setCategoria(categoriaSelecionada);
+        projeto.setInstituicao(instituicaos.get(0));
+
         JOptionPane.showMessageDialog(null, "Projeto cadastrado com sucesso!");
         chamaMenuPrincipal();
     }
@@ -303,15 +314,35 @@ public class Main {
             chamaMenuPrincipal();
         }
 
-        projeto.setNome();
-        projeto.setDescricao();
-        projeto.setCoordenacao();
-        projeto.setInstituicao();
-        projeto.setTipo();
-        projeto.setCategoria();
-        ProjetoDAO.salvar(projeto);
+        projeto.setNome(nome);
+        projeto.setDescricao(descricao);
+        projeto.setCoordenacao(coordenacao);
+        projeto.setInstituicao(instituicaos.get(0));
+        projeto.setTipo(tipoSelecionado);
+        projeto.setCategoria(categoriaSelecionada);
 
         JOptionPane.showMessageDialog(null, "Cadastro de projeto alterado com sucesso!");
         chamaMenuPrincipal();
+}
 
-}}
+    private static void chamaExcluirProjeto() throws SQLException, ClassNotFoundException {
+
+        Object[] selectionValuesProjetos = ProjetoDAO.buscarTodos().toArray(new Projeto[0]);
+        Object selectionProjetos = JOptionPane.showInputDialog(null, "Selecione o projeto que deseja remover:",
+                "Remover Projeto", JOptionPane.DEFAULT_OPTION, null, selectionValuesProjetos, null);
+
+        if (selectionProjetos != null) {
+            Projeto projetoSelecionado = (Projeto) selectionProjetos;
+            ProjetoDAO.remover(projetoSelecionado);
+
+            JOptionPane.showMessageDialog(null, "Projeto removida com sucesso!");
+            chamaMenuPrincipal();
+        }
+    }
+
+    private static void chamaRelatorioProjeto() {
+        List<Projeto> projetos = ProjetoDAO.buscarTodos();
+        RelatorioProjetoForm.emitirRelatorio(projetos);
+    }
+
+}
