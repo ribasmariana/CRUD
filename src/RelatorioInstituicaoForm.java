@@ -50,11 +50,7 @@ public class RelatorioInstituicaoForm extends JPanel {
             frame.addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent evt) {
                     frame.setVisible(false);
-                    try {
-                        AppMain.chamaMenuRelatorios();
-                    } catch (SQLException | ClassNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
+                    Main.chamaRelatorioInstituicao();
                 }
             });
             Vector<Instituicao> vetorDados = new Vector<Instituicao>();

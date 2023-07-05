@@ -140,9 +140,8 @@ public class Main {
         return null;
     }
 
-    private static void chamaRelatorioCidade() {
-        CidadeDAO cidadeDAO = new CidadeDAO();
-        List<Cidade> cidades = cidadeDAO.buscarTodos();
+    static void chamaRelatorioCidade() {
+        List<Cidade> cidades = getCidadeDAO().buscarTodos();
         RelatorioCidadeForm.emitirRelatorio(cidades);
     }
 
@@ -348,7 +347,7 @@ public class Main {
         }
     }
 
-    private static void chamaRelatorioProjeto() {
+    static void chamaRelatorioProjeto() {
         List<Projeto> projetos = getProjetoDAO().buscarTodos();
         RelatorioProjetoForm.emitirRelatorio(projetos);
     }

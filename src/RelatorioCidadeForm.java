@@ -49,11 +49,7 @@ public class RelatorioCidadeForm extends JPanel {
             frame.addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent evt) {
                     frame.setVisible(false);
-                    try {
-                        AppMain.chamaMenuRelatorios();
-                    } catch (SQLException | ClassNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
+                    Main.chamaRelatorioCidade();
                 }
             });
             Vector<Cidade> vetorDados = new Vector<Cidade>();
