@@ -59,13 +59,19 @@ public class Main {
 
         switch (menuCidade) {
             case 0:
-                chamaCadastroCidade();
+                Cidade cidadeCriada = chamaCadastroCidade();
+                JOptionPane.showMessageDialog(null,"Cidade "+cidadeCriada+" alterada com sucesso!");
+                chamaMenuPrincipal();
                 break;
             case 1:
-                chamaAlterarCidade();
+                Cidade cidadeAlterada = chamaAlterarCidade();
+                JOptionPane.showMessageDialog(null,"Cidade "+cidadeAlterada+" alterada com sucesso!");
+                chamaMenuPrincipal();
                 break;
             case 2:
-                chamaExcluirCidade();
+                Cidade cidadeExcluida = chamaExcluirCidade();
+                JOptionPane.showMessageDialog(null,"Cidade "+cidadeExcluida+" alterada com sucesso!");
+                chamaMenuPrincipal();
                 break;
             case 3:
                 chamaRelatorioCidade();
@@ -117,7 +123,7 @@ public class Main {
 
     }
 
-    private static void chamaExcluirCidade() throws SQLException, ClassNotFoundException {
+    private static Cidade chamaExcluirCidade() throws SQLException, ClassNotFoundException {
         Object[] selectionValuesCidades = getCidadeDAO().buscarTodos().toArray(new Cidade[0]);
         Object selectionCidades = JOptionPane.showInputDialog(null, "Selecione a cidade que deseja remover:",
                 "Remover Cidade", JOptionPane.DEFAULT_OPTION, null, selectionValuesCidades, null);
@@ -129,6 +135,7 @@ public class Main {
             JOptionPane.showMessageDialog(null, "Cidade removida com sucesso!");
             chamaMenuPrincipal();
         }
+        return null;
     }
 
     private static void chamaRelatorioCidade() {
