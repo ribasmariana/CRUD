@@ -11,10 +11,6 @@ public interface IGenericDAO<E> {
 
     void remover(E objeto) throws SQLException, ClassNotFoundException;
 
-    void salvar(RedeSocial redeSocial);
-
-    void remover(RedeSocial redeSocial) throws SQLException, ClassNotFoundException;
-
     List<E> buscarTodos() throws SQLException, ClassNotFoundException;
 
     List<E> buscarPorNome(String nome);

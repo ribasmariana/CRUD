@@ -6,15 +6,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RedeSocialRepository {
+public class RedeSocialRepository extends Conectora{
 
-    public Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("org.postgresql.Driver");
-        String url = "jdbc:postgresql://localhost:5432/locadora";
-        Connection connection = DriverManager.getConnection(url, "folha_owner", "");
 
-        return connection;
-    }
 
     public void insere(RedeSocial redeSocial) throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
