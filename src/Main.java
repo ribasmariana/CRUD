@@ -366,10 +366,10 @@ public class Main {
                 chamaCadastroInstituicao();
                 break;
             case 1:
-//                chamaAlterarInstituicao();
+                chamaAlterarInstituicao();
                 break;
             case 2:
-//                chamaExcluirInstituicao();
+                chamaExcluirInstituicao();
                 break;
             case 3:
                 chamaRelatorioInstituicao();
@@ -402,10 +402,10 @@ public class Main {
         if (telefone == null) {
             chamaCadastroInstituicao();
         }
-        String cidade = JOptionPane.showInputDialog(null, "Informe a cidade da instituição");
-        if (cidade == null) {
-            chamaCadastroInstituicao();
-        }
+//        String cidade = JOptionPane.showInputDialog(null, "Informe a cidade da instituição");
+//        if (cidade == null) {
+//            chamaCadastroInstituicao();
+//        }
 
 //        Object[] selectionInstituicao = instituicaos.stream().map(Instituicao::getNome).toArray();
 //        String initialSelectionInstituicao = (String) selectionInstituicao[0];
@@ -424,12 +424,60 @@ public class Main {
         instituicao.setBairro(bairro);
         instituicao.setNumero(numero);
         instituicao.setTelefone(telefone);
-//        instituicao.setCidade(cidade);
+//        instituicao.setCidade(cidade.cidade);
 
         JOptionPane.showMessageDialog(null, "Projeto cadastrado com sucesso!");
         chamaMenuPrincipal();
     }
 
+    private static Instituicao chamaAlterarInstituicao() throws SQLException, ClassNotFoundException {
+        Object[] selectionValuesInstituicao = getInstituicaoDAO().findInstituicaoInArray();
+        String initialSelectionInstituicao = (String) selectionValuesInstituicao[0];
+        Object selectionInstituicao = JOptionPane.showInputDialog(null, "Selecione a Instituição que deseja alterar",
+                "Instituições", JOptionPane.QUESTION_MESSAGE, null, selectionValuesInstituicao, selectionValuesInstituicao);
+        List<Instituicao> instituicaos = getInstituicaoDAO().buscarPorNome((String) selectionInstituicao);
+        Instituicao instituicao = instituicaos.get(0);
+
+        String nome = JOptionPane.showInputDialog(null, "Informe o nome da Instituicao", instituicaos.stream().map(Instituicao::getNome).toArray());
+        if (nome == null) {
+            chamaCadastroInstituicao();
+        }
+
+        String rua = JOptionPane.showInputDialog(null, "Informe a rua da instituição", instituicao.getRua());
+        if (rua == null) {
+        chamaCadastroInstituicao();
+        }
+
+        String bairro = JOptionPane.showInputDialog(null, "Informe o nome do bairro da instituição", instituicao.getBairro());
+        if (bairro == null) {
+            chamaCadastroInstituicao();
+        }
+        String numero = JOptionPane.showInputDialog(null, "Informe o número da instituição",instituicao.getNumero());
+        if (numero == null) {
+            chamaCadastroInstituicao();
+        }
+        String telefone = JOptionPane.showInputDialog(null, "Informe o telefone da instituição",instituicao.getTelefone());
+        if (telefone == null) {
+            chamaCadastroInstituicao();
+        }
+//        String cidade = JOptionPane.showInputDialog(null, "Informe a cidade da instituição",instituicao.getCidade());
+//        if (cidade == null) {
+//            chamaCadastroInstituicao();
+//        }
+
+        instituicao.setNome(nome);
+        instituicao.setRua(rua);
+        instituicao.setBairro(bairro);
+        instituicao.setNumero(numero);
+        instituicao.setTelefone(telefone);
+//        instituicao.setCidade(cidade);
+
+        JOptionPane.showMessageDialog(null, "Projeto alterado com sucesso!");
+        chamaMenuPrincipal();
+
+        return instituicao;
+
+    }
 
     private static void chamaExcluirInstituicao() throws SQLException, ClassNotFoundException {
 
