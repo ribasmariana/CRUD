@@ -4,6 +4,7 @@ import model.Projeto;
 import repository.*;
 
 import javax.swing.*;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Main {
@@ -17,7 +18,7 @@ public class Main {
                 JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Entrar"}, "Entrar");
     }
 
-    public static void chamaMenuPrincipal() {
+    public static void chamaMenuPrincipal() throws SQLException, ClassNotFoundException {
         String[] opcoesMenu = {"Cidades", "Projetos", "Instituições", "Sair"};
         int opcao = JOptionPane.showOptionDialog(null, "Escolha uma opção:",
                 "Menu Principal",
@@ -50,53 +51,53 @@ public class Main {
 
     /////////////////////////////////////
 
-    public static void chamaMenuCidade() {
-            String[] opcoesMenuCidade = {"Cadastrar", "Alterar", "Excluir", "Gerar relatório", "Voltar"};
-            int menuCidade = JOptionPane.showOptionDialog(null, "Escolha o processo que deseja realizar",
-                    "CIDADES",
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesMenuCidade, opcoesMenuCidade[0]);
+    public static void chamaMenuCidade() throws SQLException, ClassNotFoundException {
+        String[] opcoesMenuCidade = {"Cadastrar", "Alterar", "Excluir", "Gerar relatório", "Voltar"};
+        int menuCidade = JOptionPane.showOptionDialog(null, "Escolha o processo que deseja realizar",
+                "CIDADES",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesMenuCidade, opcoesMenuCidade[0]);
 
-            switch (menuCidade) {
-                case 0:
-                    chamaCadastroCidade();
-                    break;
-                case 1:
-                    chamaAlterarCidade();
-                    break;
-                case 2:
-                    chamaExcluirCidade();
-                    break;
-                case 3:
-                    chamaRelatorioCidade();
-                    break;
-            }
+        switch (menuCidade) {
+            case 0:
+                chamaCadastroCidade();
+                break;
+            case 1:
+                chamaAlterarCidade();
+                break;
+            case 2:
+                chamaExcluirCidade();
+                break;
+            case 3:
+                chamaRelatorioCidade();
+                break;
+        }
     }
 
     private static Cidade chamaCadastroCidade() {
 
-            String nome = JOptionPane.showInputDialog(null, "Informe o nome da cidade");
-            if (nome == null) {
-                chamaCadastroCidade();
-            }
-
-            String uf = JOptionPane.showInputDialog(null, "Informe a UF da cidade");
-            if (uf == null) {
-                chamaCadastroCidade();
-            }
-
-            Cidade cidade = new Cidade();
-            cidade.setNome(nome);
-            cidade.setUf(uf);
-            return cidade;
-
+        String nome = JOptionPane.showInputDialog(null, "Informe o nome da cidade");
+        if (nome == null) {
+            chamaCadastroCidade();
         }
 
-    private static Cidade chamaAlterarCidade() {
-        Object[] selectionValuesCidades = CidadeDAO.findCidadesInArray();
+        String uf = JOptionPane.showInputDialog(null, "Informe a UF da cidade");
+        if (uf == null) {
+            chamaCadastroCidade();
+        }
+
+        Cidade cidade = new Cidade();
+        cidade.setNome(nome);
+        cidade.setUf(uf);
+        return cidade;
+
+    }
+
+    private static Cidade chamaAlterarCidade() throws SQLException, ClassNotFoundException {
+        Object[] selectionValuesCidades = getCidadeDAO().findCidadesInArray();
         String initialSelectionCidade = (String) selectionValuesCidades[0];
         Object selectionCidade = JOptionPane.showInputDialog(null, "Selecione a cidade que deseja alterar",
                 "Cidades", JOptionPane.QUESTION_MESSAGE, null, selectionValuesCidades, selectionValuesCidades);
-        List<Cidade> cidades = CidadeDAO.buscarPorNome((String) selectionCidade);
+        List<Cidade> cidades = getCidadeDAO().buscarPorNome((String) selectionCidade);
         Cidade cidade = cidades.get(0);
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome da cidade", cidade.getNome());
@@ -111,20 +112,19 @@ public class Main {
 
         cidade.setNome(nome);
         cidade.setUf(uf);
+
         return cidade;
 
-        JOptionPane.showMessageDialog(null, "Cadastro de cidade alterado com sucesso!");
-        chamaMenuPrincipal();
     }
 
-    private static void chamaExcluirCidade() {
-        Object[] selectionValuesCidades = CidadeDAO.buscarTodos().toArray(new Cidade[0]);
+    private static void chamaExcluirCidade() throws SQLException, ClassNotFoundException {
+        Object[] selectionValuesCidades = getCidadeDAO().buscarTodos().toArray(new Cidade[0]);
         Object selectionCidades = JOptionPane.showInputDialog(null, "Selecione a cidade que deseja remover:",
                 "Remover Cidade", JOptionPane.DEFAULT_OPTION, null, selectionValuesCidades, null);
 
         if (selectionCidades != null) {
             Cidade cidadeSelecionada = (Cidade) selectionCidades;
-            CidadeDAO.remover(cidadeSelecionada);
+            getCidadeDAO().remover(cidadeSelecionada);
 
             JOptionPane.showMessageDialog(null, "Cidade removida com sucesso!");
             chamaMenuPrincipal();
@@ -132,13 +132,14 @@ public class Main {
     }
 
     private static void chamaRelatorioCidade() {
-        List<Cidade> cidades = CidadeDAO.buscarTodos();
+        CidadeDAO cidadeDAO = new CidadeDAO();
+        List<Cidade> cidades = cidadeDAO.buscarTodos();
         RelatorioCidadeForm.emitirRelatorio(cidades);
     }
 
     ////////////////////////////////
 
-    public static void chamaMenuProjetos() {
+    public static void chamaMenuProjetos() throws SQLException, ClassNotFoundException {
         String[] opcoesMenuProjetos = {"Cadastrar", "Alterar", "Excluir", "Gerar relatório", "Voltar"};
         int menuProjeto = JOptionPane.showOptionDialog(null, "Escolha o processo que deseja realizar",
                 "PROJETOS",
@@ -160,7 +161,7 @@ public class Main {
         }
     }
 
-    private static void chamaCadastroProjeto() {
+    private static void chamaCadastroProjeto() throws SQLException, ClassNotFoundException {
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome do projeto");
         if (nome == null) {
@@ -209,7 +210,7 @@ public class Main {
             chamaCadastroProjeto();
         }
 
-        List<Instituicao> instituicaos = InstituicaoDAO.buscarTodos();
+        List<Instituicao> instituicaos = getInstituicaoDAO().buscarTodos();
 
         if (instituicaos.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Nenhuma instituição cadastrada!");
@@ -239,13 +240,13 @@ public class Main {
         chamaMenuPrincipal();
     }
 
-    private static void chamaAlterarProjeto() {
-        Object[] selectionValuesProjetos = ProjetoDAO.findProjetosInArray();
+    private static void chamaAlterarProjeto() throws SQLException, ClassNotFoundException {
+        Object[] selectionValuesProjetos = getProjetoDAO().findProjetosInArray();
         String initialSelectionProjeto = (String) selectionValuesProjetos[0];
         Object selectionProjeto = JOptionPane.showInputDialog(null, "Selecione o projeto que deseja alterar",
                 "Projetos", JOptionPane.QUESTION_MESSAGE, null, selectionValuesProjetos, selectionValuesProjetos);
 
-        List<Projeto> projetos = ProjetoDAO.buscarPorNome((String) selectionProjeto);
+        List<Projeto> projetos = getProjetoDAO().buscarPorNome((String) selectionProjeto);
         Projeto projeto = projetos.get(0);
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome do projeto", projeto.getNome());
@@ -295,7 +296,7 @@ public class Main {
             chamaCadastroProjeto();
         }
 
-        List<Instituicao> instituicaos = InstituicaoDAO.buscarTodos();
+        List<Instituicao> instituicaos = getInstituicaoDAO().buscarTodos();
 
         if (instituicaos.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Nenhuma instituição cadastrada!");
@@ -322,17 +323,16 @@ public class Main {
 
         JOptionPane.showMessageDialog(null, "Cadastro de projeto alterado com sucesso!");
         chamaMenuPrincipal();
-}
+    }
 
-    private static void chamaExcluirProjeto(){
-
-        Object[] selectionValuesProjetos = ProjetoDAO.buscarTodos().toArray(new Projeto[0]);
+    private static void chamaExcluirProjeto() throws SQLException, ClassNotFoundException {
+        Object[] selectionValuesProjetos = getProjetoDAO().buscarTodos().toArray(new Projeto[0]);
         Object selectionProjetos = JOptionPane.showInputDialog(null, "Selecione o projeto que deseja remover:",
                 "Remover Projeto", JOptionPane.DEFAULT_OPTION, null, selectionValuesProjetos, null);
 
         if (selectionProjetos != null) {
             Projeto projetoSelecionado = (Projeto) selectionProjetos;
-            ProjetoDAO.remover(projetoSelecionado);
+            getProjetoDAO().remover(projetoSelecionado);
 
             JOptionPane.showMessageDialog(null, "Projeto removida com sucesso!");
             chamaMenuPrincipal();
@@ -340,7 +340,7 @@ public class Main {
     }
 
     private static void chamaRelatorioProjeto() {
-        List<Projeto> projetos = ProjetoDAO.buscarTodos();
+        List<Projeto> projetos = getProjetoDAO().buscarTodos();
         RelatorioProjetoForm.emitirRelatorio(projetos);
     }
 
@@ -368,6 +368,19 @@ public class Main {
         }
     }
 
+    public static ProjetoDAO getProjetoDAO() {
+        ProjetoDAO projetoDAO = new ProjetoDAO();
+        return projetoDAO;
+    }
 
+    public static InstituicaoDAO getInstituicaoDAO() {
+        InstituicaoDAO instituicaoDAO = new InstituicaoDAO();
+        return instituicaoDAO;
+    }
+
+    public static CidadeDAO getCidadeDAO() {
+        CidadeDAO cidadeDAO = new CidadeDAO();
+        return cidadeDAO;
+    }
 
 }
