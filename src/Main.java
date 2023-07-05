@@ -62,17 +62,17 @@ public class Main {
         switch (menuCidade) {
             case 0:
                 Cidade cidadeCriada = chamaCadastroCidade();
-                JOptionPane.showMessageDialog(null, "Cidade " + cidadeCriada + " alterada com sucesso!");
+                JOptionPane.showMessageDialog(null, "Cidade " + cidadeCriada.getNome() + " cadastrada com sucesso!");
                 chamaMenuPrincipal();
                 break;
             case 1:
                 Cidade cidadeAlterada = chamaAlterarCidade();
-                JOptionPane.showMessageDialog(null, "Cidade " + cidadeAlterada + " alterada com sucesso!");
+                JOptionPane.showMessageDialog(null, "Cidade " + cidadeAlterada.getNome() + " alterada com sucesso!");
                 chamaMenuPrincipal();
                 break;
             case 2:
                 Cidade cidadeExcluida = chamaExcluirCidade();
-                JOptionPane.showMessageDialog(null, "Cidade " + cidadeExcluida + " alterada com sucesso!");
+                JOptionPane.showMessageDialog(null, "Cidade " + cidadeExcluida.getNome() + " excluída com sucesso!");
                 chamaMenuPrincipal();
                 break;
             case 3:
@@ -155,13 +155,19 @@ public class Main {
 
         switch (menuProjeto) {
             case 0:
-                chamaCadastroProjeto();
+                Projeto projetoCriado = chamaCadastroProjeto();
+                JOptionPane.showMessageDialog(null, "Projeto " + projetoCriado.getNome() + " cadastrado com sucesso!");
+                chamaMenuPrincipal();
                 break;
             case 1:
-                chamaAlterarProjeto();
+                Projeto projetoAlterado = chamaAlterarProjeto();
+                JOptionPane.showMessageDialog(null, "Projeto " + projetoAlterado.getNome() + " alterado com sucesso!");
+                chamaMenuPrincipal();
                 break;
             case 2:
-                chamaExcluirProjeto();
+                Projeto projetoExcluido = chamaExcluirProjeto();
+                JOptionPane.showMessageDialog(null, "Projeto " + projetoExcluido.getNome() + " excluído com sucesso!");
+                chamaMenuPrincipal();
                 break;
             case 3:
                 chamaRelatorioProjeto();
@@ -169,7 +175,7 @@ public class Main {
         }
     }
 
-    private static void chamaCadastroProjeto() throws SQLException, ClassNotFoundException {
+    private static Projeto chamaCadastroProjeto() throws SQLException, ClassNotFoundException {
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome do projeto");
         if (nome == null) {
@@ -246,9 +252,10 @@ public class Main {
 
         JOptionPane.showMessageDialog(null, "Projeto cadastrado com sucesso!");
         chamaMenuPrincipal();
+        return projeto;
     }
 
-    private static void chamaAlterarProjeto() throws SQLException, ClassNotFoundException {
+    private static Projeto chamaAlterarProjeto() throws SQLException, ClassNotFoundException {
         Object[] selectionValuesProjetos = getProjetoDAO().findProjetosInArray();
         String initialSelectionProjeto = (String) selectionValuesProjetos[0];
         Object selectionProjeto = JOptionPane.showInputDialog(null, "Selecione o projeto que deseja alterar",
@@ -331,9 +338,10 @@ public class Main {
 
         JOptionPane.showMessageDialog(null, "Cadastro de projeto alterado com sucesso!");
         chamaMenuPrincipal();
+        return projeto;
     }
 
-    private static void chamaExcluirProjeto() throws SQLException, ClassNotFoundException {
+    private static Projeto chamaExcluirProjeto() throws SQLException, ClassNotFoundException {
         Object[] selectionValuesProjetos = getProjetoDAO().buscarTodos().toArray(new Projeto[0]);
         Object selectionProjetos = JOptionPane.showInputDialog(null, "Selecione o projeto que deseja remover:",
                 "Remover Projeto", JOptionPane.DEFAULT_OPTION, null, selectionValuesProjetos, null);
@@ -341,10 +349,8 @@ public class Main {
         if (selectionProjetos != null) {
             Projeto projetoSelecionado = (Projeto) selectionProjetos;
             getProjetoDAO().remover(projetoSelecionado);
-
-            JOptionPane.showMessageDialog(null, "Projeto removida com sucesso!");
-            chamaMenuPrincipal();
         }
+        return null;
     }
 
     static void chamaRelatorioProjeto() {
@@ -362,13 +368,19 @@ public class Main {
 
         switch (menuInstituicoes) {
             case 0:
-                chamaCadastroInstituicao();
+                Instituicao instituicaoCriada = chamaCadastroInstituicao();
+                JOptionPane.showMessageDialog(null, "Instituição " + instituicaoCriada.getNome() + " cadastrada com sucesso!");
+                chamaMenuPrincipal();
                 break;
             case 1:
-                chamaAlterarInstituicao();
+                Instituicao instituicaoAlterada = chamaAlterarInstituicao();
+                JOptionPane.showMessageDialog(null, "Instituição " + instituicaoAlterada.getNome() + " alterada com sucesso!");
+                chamaMenuPrincipal();
                 break;
             case 2:
-                chamaExcluirInstituicao();
+                Instituicao instituicaoExcluida = chamaExcluirInstituicao();
+                JOptionPane.showMessageDialog(null, "Instituição " + instituicaoExcluida.getNome() + " excluída com sucesso!");
+                chamaMenuPrincipal();
                 break;
             case 3:
                 chamaRelatorioInstituicao();
@@ -377,7 +389,7 @@ public class Main {
     }
 
 
-    private static void chamaCadastroInstituicao() throws SQLException, ClassNotFoundException {
+    private static Instituicao chamaCadastroInstituicao() throws SQLException, ClassNotFoundException {
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome do instituicao");
         if (nome == null) {
@@ -425,8 +437,7 @@ public class Main {
         instituicao.setTelefone(telefone);
 //        instituicao.setCidade(cidade.cidade);
 
-        JOptionPane.showMessageDialog(null, "Projeto cadastrado com sucesso!");
-        chamaMenuPrincipal();
+        return instituicao;
     }
 
     private static Instituicao chamaAlterarInstituicao() throws SQLException, ClassNotFoundException {
@@ -478,7 +489,7 @@ public class Main {
 
     }
 
-    private static void chamaExcluirInstituicao() throws SQLException, ClassNotFoundException {
+    private static Instituicao chamaExcluirInstituicao() throws SQLException, ClassNotFoundException {
 
         Object[] selectionValuesInstituicao = getInstituicaoDAO().buscarTodos().toArray(new Instituicao[0]);
         Object selectionInstituicao = JOptionPane.showInputDialog(null, "Selecione a Instituição que deseja remover:",
@@ -487,10 +498,8 @@ public class Main {
         if (selectionInstituicao != null) {
             Instituicao instituicaoSelecionada = (Instituicao) selectionInstituicao;
             getInstituicaoDAO().remover(instituicaoSelecionada);
-
-            JOptionPane.showMessageDialog(null, "Instituição removida com sucesso!");
-            chamaMenuPrincipal();
         }
+        return null;
     }
 
     public static void chamaRelatorioInstituicao() {
