@@ -8,15 +8,7 @@ import java.util.List;
 
 import static repository.CidadeDAO.cidades;
 
-public class CidadeRepository {
-
-    public Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("org.postgresql.Driver");
-        String url = "jdbc:postgresql://localhost:5432/locadora";
-        Connection connection = DriverManager.getConnection(url, "folha_owner", "");
-
-        return connection;
-    }
+public class CidadeRepository extends Conectora {
 
 
     public void insere(Cidade cidade) throws SQLException, ClassNotFoundException {
