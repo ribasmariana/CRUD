@@ -470,10 +470,14 @@ public class Main {
         if (telefone == null) {
             chamaCadastroInstituicao();
         }
-//        String cidade = JOptionPane.showInputDialog(null, "Informe a cidade da instituição",instituicao.getCidade());
-//        if (cidade == null) {
-//            chamaCadastroInstituicao();
-//        }
+        String redeSocialFacebook = JOptionPane.showInputDialog(null, "Informe o usuário da instituição no facebook",instituicao.getRedesSociais());
+        if (redeSocialFacebook == null) {
+            chamaCadastroInstituicao();
+        }
+        String redeSocialLinkedin = JOptionPane.showInputDialog(null, "Informe o usuário da instituição no linkedin",instituicao.getRedesSociais());
+        if (redeSocialLinkedin == null) {
+            chamaCadastroInstituicao();
+        }
 
         instituicao.setNome(nome);
         instituicao.setRua(rua);
@@ -481,6 +485,7 @@ public class Main {
         instituicao.setNumero(numero);
         instituicao.setTelefone(telefone);
 //        instituicao.setCidade(cidade);
+        instituicao.setRedesSociais();
 
         JOptionPane.showMessageDialog(null, "Projeto alterado com sucesso!");
         chamaMenuPrincipal();

@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Instituicao {
 
@@ -81,7 +80,7 @@ public class Instituicao {
         return redesSociais;
     }
 
-    public void setRedesSociais(List redesSociais) {
+    public void setRedesSociais() {
         this.redesSociais = (ArrayList) redesSociais;
     }
 
