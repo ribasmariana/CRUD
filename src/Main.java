@@ -413,21 +413,18 @@ public class Main {
         if (telefone == null) {
             chamaCadastroInstituicao();
         }
-//        String cidade = JOptionPane.showInputDialog(null, "Informe a cidade da instituição");
-//        if (cidade == null) {
-//            chamaCadastroInstituicao();
-//        }
+        String redeSocial = JOptionPane.showInputDialog(null, "Informe o usuário da instituição no facebook");
+        if (redeSocial == null) {
+            chamaCadastroInstituicao();
+        }
 
-//        Object[] selectionInstituicao = instituicaos.stream().map(Instituicao::getNome).toArray();
-//        String initialSelectionInstituicao = (String) selectionInstituicao[0];
-//
-//        Object selecInstituicao = JOptionPane.showInputDialog(null, "Selecione a instituição",
-//                "Instituições", JOptionPane.QUESTION_MESSAGE, null, selectionInstituicao, initialSelectionInstituicao);
-//
-//        if (selecInstituicao == null) {
-//            JOptionPane.showMessageDialog(null, "Cadastro de instituição cancelado.");
-//            chamaMenuPrincipal();
-//        }
+        Object[] selectionValuesCidades = getCidadeDAO().findCidadesInArray();
+        String initialSelectionCidades = (String) selectionValuesCidades[0];
+        Object selectionCidades = JOptionPane.showInputDialog(null, "Selecione o projeto que deseja alterar",
+                "Cidades", JOptionPane.QUESTION_MESSAGE, null, selectionValuesCidades, selectionValuesCidades);
+
+        List<Cidade> cidades = getCidadeDAO().buscarPorNome((String) selectionCidades);
+        Cidade cidade = cidades.get(0);
 
         Instituicao instituicao = new Instituicao();
         instituicao.setNome(nome);
@@ -435,7 +432,8 @@ public class Main {
         instituicao.setBairro(bairro);
         instituicao.setNumero(numero);
         instituicao.setTelefone(telefone);
-//        instituicao.setCidade(cidade.cidade);
+        instituicao.setRedesSociais(redeSocial);
+        instituicao.setCidade((Cidade) selectionCidades);
 
         return instituicao;
     }
@@ -470,25 +468,26 @@ public class Main {
         if (telefone == null) {
             chamaCadastroInstituicao();
         }
-        String redeSocialFacebook = JOptionPane.showInputDialog(null, "Informe o usuário da instituição no facebook",instituicao.getRedesSociais());
-        if (redeSocialFacebook == null) {
+        String redeSocial = JOptionPane.showInputDialog(null, "Informe o usuário da instituição no facebook");
+        if (redeSocial == null) {
             chamaCadastroInstituicao();
         }
-        String redeSocialLinkedin = JOptionPane.showInputDialog(null, "Informe o usuário da instituição no linkedin",instituicao.getRedesSociais());
-        if (redeSocialLinkedin == null) {
-            chamaCadastroInstituicao();
-        }
+
+        Object[] selectionValuesCidades = getCidadeDAO().findCidadesInArray();
+        String initialSelectionCidades = (String) selectionValuesCidades[0];
+        Object selectionCidades = JOptionPane.showInputDialog(null, "Selecione o projeto que deseja alterar",
+                "Cidades", JOptionPane.QUESTION_MESSAGE, null, selectionValuesCidades, selectionValuesCidades);
+
+        List<Cidade> cidades = getCidadeDAO().buscarPorNome((String) selectionCidades);
+        Cidade cidade = cidades.get(0);
 
         instituicao.setNome(nome);
         instituicao.setRua(rua);
         instituicao.setBairro(bairro);
         instituicao.setNumero(numero);
         instituicao.setTelefone(telefone);
-//        instituicao.setCidade(cidade);
-        instituicao.setRedesSociais();
-
-        JOptionPane.showMessageDialog(null, "Projeto alterado com sucesso!");
-        chamaMenuPrincipal();
+        instituicao.setCidade(cidade);
+        instituicao.setRedesSociais(redeSocial);
 
         return instituicao;
 
