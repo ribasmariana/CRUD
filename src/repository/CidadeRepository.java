@@ -20,7 +20,6 @@ public class CidadeRepository extends Conectora {
         stmt.setString(2, cidade.getNome());
         stmt.setString(3, cidade.getUf());
 
-
         int i = stmt.executeUpdate();
         System.out.println(i + " linhas inseridas");
         connection.close();
