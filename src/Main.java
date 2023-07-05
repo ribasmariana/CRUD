@@ -8,14 +8,16 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
         exibirMensagemBoasVindas();
+        chamaMenuPrincipal();
     }
 
     private static void exibirMensagemBoasVindas() {
         JOptionPane.showOptionDialog(null, "Seja bem-vindo ao Inova Brasil!",
                 "Mensagem de boas-vindas", JOptionPane.DEFAULT_OPTION,
                 JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Entrar"}, "Entrar");
+
     }
 
     public static void chamaMenuPrincipal() throws SQLException, ClassNotFoundException {
@@ -60,17 +62,17 @@ public class Main {
         switch (menuCidade) {
             case 0:
                 Cidade cidadeCriada = chamaCadastroCidade();
-                JOptionPane.showMessageDialog(null,"Cidade "+cidadeCriada+" alterada com sucesso!");
+                JOptionPane.showMessageDialog(null, "Cidade " + cidadeCriada + " alterada com sucesso!");
                 chamaMenuPrincipal();
                 break;
             case 1:
                 Cidade cidadeAlterada = chamaAlterarCidade();
-                JOptionPane.showMessageDialog(null,"Cidade "+cidadeAlterada+" alterada com sucesso!");
+                JOptionPane.showMessageDialog(null, "Cidade " + cidadeAlterada + " alterada com sucesso!");
                 chamaMenuPrincipal();
                 break;
             case 2:
                 Cidade cidadeExcluida = chamaExcluirCidade();
-                JOptionPane.showMessageDialog(null,"Cidade "+cidadeExcluida+" alterada com sucesso!");
+                JOptionPane.showMessageDialog(null, "Cidade " + cidadeExcluida + " alterada com sucesso!");
                 chamaMenuPrincipal();
                 break;
             case 3:
@@ -353,7 +355,7 @@ public class Main {
 
     ////////////////////////////////
 
-    public static void chamaMenuInstituicoes() {
+    public static void chamaMenuInstituicoes() throws SQLException, ClassNotFoundException {
         String[] opcoesMenuInstituicoes = {"Cadastrar", "Alterar", "Excluir", "Gerar relatório", "Voltar"};
         int menuInstituicoes = JOptionPane.showOptionDialog(null, "Escolha o processo que deseja realizar",
                 "INSTITUIÇÕES",
@@ -364,16 +366,91 @@ public class Main {
                 chamaCadastroInstituicao();
                 break;
             case 1:
-                chamaAlterarInstituicao();
+//                chamaAlterarInstituicao();
                 break;
             case 2:
-                chamaExcluirInstituicao();
+//                chamaExcluirInstituicao();
                 break;
             case 3:
                 chamaRelatorioInstituicao();
                 break;
         }
     }
+
+
+    private static void chamaCadastroInstituicao() throws SQLException, ClassNotFoundException {
+
+        String nome = JOptionPane.showInputDialog(null, "Informe o nome do instituicao");
+        if (nome == null) {
+            chamaCadastroInstituicao();
+        }
+
+        String rua = JOptionPane.showInputDialog(null, "Informe a rua da instituição");
+        if (rua == null) {
+            chamaCadastroInstituicao();
+        }
+
+        String bairro = JOptionPane.showInputDialog(null, "Informe o nome do bairro da instituição");
+        if (bairro == null) {
+            chamaCadastroInstituicao();
+        }
+        String numero = JOptionPane.showInputDialog(null, "Informe o número da instituição");
+        if (numero == null) {
+            chamaCadastroInstituicao();
+        }
+        String telefone = JOptionPane.showInputDialog(null, "Informe o telefone da instituição");
+        if (telefone == null) {
+            chamaCadastroInstituicao();
+        }
+        String cidade = JOptionPane.showInputDialog(null, "Informe a cidade da instituição");
+        if (cidade == null) {
+            chamaCadastroInstituicao();
+        }
+
+//        Object[] selectionInstituicao = instituicaos.stream().map(Instituicao::getNome).toArray();
+//        String initialSelectionInstituicao = (String) selectionInstituicao[0];
+//
+//        Object selecInstituicao = JOptionPane.showInputDialog(null, "Selecione a instituição",
+//                "Instituições", JOptionPane.QUESTION_MESSAGE, null, selectionInstituicao, initialSelectionInstituicao);
+//
+//        if (selecInstituicao == null) {
+//            JOptionPane.showMessageDialog(null, "Cadastro de instituição cancelado.");
+//            chamaMenuPrincipal();
+//        }
+
+        Instituicao instituicao = new Instituicao();
+        instituicao.setNome(nome);
+        instituicao.setRua(rua);
+        instituicao.setBairro(bairro);
+        instituicao.setNumero(numero);
+        instituicao.setTelefone(telefone);
+//        instituicao.setCidade(cidade);
+
+        JOptionPane.showMessageDialog(null, "Projeto cadastrado com sucesso!");
+        chamaMenuPrincipal();
+    }
+
+
+    private static void chamaExcluirInstituicao() throws SQLException, ClassNotFoundException {
+
+        Object[] selectionValuesInstituicao = getInstituicaoDAO().buscarTodos().toArray(new Instituicao[0]);
+        Object selectionInstituicao = JOptionPane.showInputDialog(null, "Selecione a Instituição que deseja remover:",
+                "Remover Instituição", JOptionPane.DEFAULT_OPTION, null, selectionValuesInstituicao, null);
+
+        if (selectionInstituicao != null) {
+            Instituicao instituicaoSelecionada = (Instituicao) selectionInstituicao;
+            getInstituicaoDAO().remover(instituicaoSelecionada);
+
+            JOptionPane.showMessageDialog(null, "Instituição removida com sucesso!");
+            chamaMenuPrincipal();
+        }
+    }
+
+    public static void chamaRelatorioInstituicao() {
+        List<Instituicao> instituicaos = getInstituicaoDAO().buscarTodos();
+        RelatorioInstituicaoForm.emitirRelatorio(instituicaos);
+    }
+
 
     public static ProjetoDAO getProjetoDAO() {
         ProjetoDAO projetoDAO = new ProjetoDAO();
