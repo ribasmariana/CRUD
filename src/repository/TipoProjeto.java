@@ -29,6 +29,10 @@ public enum TipoProjeto {
 
     }
 
+    public Integer getCodigo() {
+        return codigo;
+    }
+
     public static TipoProjeto getTipoById(Integer opcao) {
         if (opcao == 1) {
             return PESQUISA;

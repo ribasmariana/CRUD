@@ -460,21 +460,21 @@ public class Main {
           chamaMenuPrincipal();
        }
 
-        List<RedeSocial> redeSociais = getRedeSocialDAO().buscarTodos();
-
-        if (redeSociais.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhuma Rede Social cadastrada!");
-
-        }
-        Object[] selectionRedeSocial = redeSociais.stream().map(RedeSocial::getDescricao).toArray();
-        String initialSelectionRedeSocial = (String) selectionRedeSocial[0];
-        Object selecRede = JOptionPane.showInputDialog(null, "Selecione a Rede Social",
-                "Redes Sociais", JOptionPane.QUESTION_MESSAGE, null, selectionRedeSocial, initialSelectionRedeSocial);
-
-        if (selecRede == null) {
-            JOptionPane.showMessageDialog(null, "Cadastro de Instituição cancelado.");
-            chamaMenuPrincipal();
-        }
+//        List<RedeSocial> redeSociais = getRedeSocialDAO().buscarTodos();
+//
+//        if (redeSociais.isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "Nenhuma Rede Social cadastrada!");
+//
+//        }
+//        Object[] selectionRedeSocial = redeSociais.stream().map(RedeSocial::getDescricao).toArray();
+//        String initialSelectionRedeSocial = (String) selectionRedeSocial[0];
+//        Object selecRede = JOptionPane.showInputDialog(null, "Selecione a Rede Social",
+//                "Redes Sociais", JOptionPane.QUESTION_MESSAGE, null, selectionRedeSocial, initialSelectionRedeSocial);
+//
+//        if (selecRede == null) {
+//            JOptionPane.showMessageDialog(null, "Cadastro de Instituição cancelado.");
+//            chamaMenuPrincipal();
+//        }
 
 
         Instituicao instituicao = new Instituicao();
@@ -485,7 +485,6 @@ public class Main {
         instituicao.setTelefone(telefone);
 
         instituicao.setCidade(cidades.get(0));
-        instituicao.setRedeSocial(redeSociais.get(0));
         getInstituicaoDAO().salvar(instituicao);
 
         return instituicao;
@@ -562,7 +561,7 @@ public class Main {
         instituicao.setTelefone(telefone);
 
         instituicao.setCidade(cidades.get(0));
-        instituicao.setRedeSocial(redeSociais.get(0));
+
 
         JOptionPane.showMessageDialog(null, "instituição alterada com sucesso!");
         chamaMenuPrincipal();

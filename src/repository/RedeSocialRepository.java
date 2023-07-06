@@ -6,8 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RedeSocialRepository extends Conectora{
-
+public class RedeSocialRepository extends Conectora {
 
 
     public void insere(RedeSocial redeSocial) throws SQLException, ClassNotFoundException {
@@ -17,7 +16,7 @@ public class RedeSocialRepository extends Conectora{
                 "rede_social  values(null,?,?)");
 
         stmt.setString(1, redeSocial.getDescricao());
-        stmt.setInt(2,redeSocial.getCodigoInstituicao());
+        stmt.setInt(2, redeSocial.getCodigoInstituicao());
 
         int i = stmt.executeUpdate();
         System.out.println(i + " linhas inseridas");
@@ -45,6 +44,7 @@ public class RedeSocialRepository extends Conectora{
         connection.close();
         return redesSociais;
     }
+
     public List<RedeSocial> busca() throws SQLException, ClassNotFoundException {
         List<RedeSocial> redesSociais = new ArrayList<>();
         Connection connection = getConnection();
@@ -54,17 +54,42 @@ public class RedeSocialRepository extends Conectora{
 
         while (resultSet.next()) {
 
-                RedeSocial redeSocial = new RedeSocial();
-                redeSocial.setId(resultSet.getInt(1));
-                redeSocial.setDescricao(resultSet.getString(2));
-                redeSocial.setCodigoInstituicao(resultSet.getInt(3));
-                redesSociais.add(redeSocial);
+            RedeSocial redeSocial = new RedeSocial();
+            redeSocial.setId(resultSet.getInt(1));
+            redeSocial.setDescricao(resultSet.getString(2));
+            redeSocial.setCodigoInstituicao(resultSet.getInt(3));
+            redesSociais.add(redeSocial);
 
 
         }
         connection.close();
         return redesSociais;
     }
+
+    public List<RedeSocial> buscaPorIstituicao(Integer idInstituicao) throws SQLException, ClassNotFoundException {
+        List<RedeSocial> redesSociais = new ArrayList<>();
+        Connection connection = getConnection();
+
+        PreparedStatement stmt = connection.prepareStatement("select * from rede_social where cd_instituicao = ?");
+        stmt.setInt(1, idInstituicao);
+
+        ResultSet resultSet = stmt.executeQuery();
+
+
+        while (resultSet.next()) {
+
+            RedeSocial redeSocial = new RedeSocial();
+            redeSocial.setId(resultSet.getInt(1));
+            redeSocial.setDescricao(resultSet.getString(2));
+            redeSocial.setCodigoInstituicao(resultSet.getInt(3));
+            redesSociais.add(redeSocial);
+
+
+        }
+        connection.close();
+        return redesSociais;
+    }
+
     public Integer proximoId() throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
         PreparedStatement stmt = connection.prepareStatement("select max(id) from rede_social");
@@ -75,6 +100,7 @@ public class RedeSocialRepository extends Conectora{
         }
         return 1;
     }
+
     public void update(RedeSocial redeSocial) throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
 
@@ -87,6 +113,7 @@ public class RedeSocialRepository extends Conectora{
         System.out.println(i + " linhas atualizadas");
         connection.close();
     }
+
     public void delete(RedeSocial redeSocial) throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
         PreparedStatement stmt = connection.prepareStatement("DELETE FROM rede_social" +
