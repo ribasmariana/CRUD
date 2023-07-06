@@ -25,12 +25,12 @@ public class CidadeRepository extends Conectora {
         connection.close();
     }
 
-    public List<Cidade> buscaPorId(Long id) throws SQLException, ClassNotFoundException {
+    public List<Cidade> buscaPorId(Integer id) throws SQLException, ClassNotFoundException {
         List<Cidade> pessoas = new ArrayList<>();
         Connection connection = getConnection();
 
-        PreparedStatement stmt = connection.prepareStatement("select * from cidade WHERE id = ?");
-        stmt.setLong(1, id);
+        PreparedStatement stmt = connection.prepareStatement("select * from cidade WHERE cd_cidade = ?");
+        stmt.setInt(1, id);
         ResultSet resultSet = stmt.executeQuery();
 
         while (resultSet.next()) {

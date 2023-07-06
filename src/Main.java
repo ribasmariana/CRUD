@@ -21,7 +21,7 @@ public class Main {
     }
 
     public static void chamaMenuPrincipal() throws SQLException, ClassNotFoundException {
-        String[] opcoesMenu = {"Cidades", "Projetos", "Instituições", "Sair"};
+        String[] opcoesMenu = {"Cidades", "Projetos", "Instituições","Redes Sociais","Sair"};
         int opcao = JOptionPane.showOptionDialog(null, "Escolha uma opção:",
                 "Menu Principal",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesMenu, opcoesMenu[0]);
@@ -593,17 +593,34 @@ public class Main {
 
         }
     }
-    private static RedeSocial chamaCadastroRedeSocial() {
+    private static RedeSocial chamaCadastroRedeSocial() throws SQLException, ClassNotFoundException {
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome da RedeSocial");
         if (nome == null) {
             chamaCadastroRedeSocial();
         }
 
+        List<Instituicao> instituicaos = getInstituicaoDAO().buscarTodos();
+
+        if (instituicaos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhuma instituição cadastrada!");
+            chamaMenuPrincipal();
+        }
+
+        Object[] selectionInstituicao = instituicaos.stream().map(Instituicao::getNome).toArray();
+        String initialSelectionInstituicao = (String) selectionInstituicao[0];
+
+        Object selecInstituicao = JOptionPane.showInputDialog(null, "Selecione a instituição",
+                "Instituições", JOptionPane.QUESTION_MESSAGE, null, selectionInstituicao, initialSelectionInstituicao);
+
+        if (selecInstituicao == null) {
+            JOptionPane.showMessageDialog(null, "Cadastro de rede social cancelado.");
+            chamaMenuPrincipal();
+        }
 
         RedeSocial redeSocial = new RedeSocial();
         redeSocial.setDescricao(nome);
-
+        redeSocial.setCodigoInstituicao(instituicaos.get(0).getCodigo());
 
         getRedeSocialDAO().salvar(redeSocial);
         return redeSocial;
@@ -629,7 +646,7 @@ public class Main {
 
     }
     private static RedeSocial chamaExcluirRedeSocial() throws SQLException, ClassNotFoundException {
-        Object[] selectionValuesRedesSociais = getRedeSocialDAO().buscarTodos().toArray(new RedeSocial[0]);
+        Object[] selectionValuesRedesSociais = getRedeSocialDAO().findRedesSociaisInArray();
         Object selectionRedesSociais = JOptionPane.showInputDialog(null, "Selecione a Rede Social que deseja remover:",
                 "Remover Rede Social", JOptionPane.DEFAULT_OPTION, null, selectionValuesRedesSociais, null);
 

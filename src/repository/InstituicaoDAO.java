@@ -45,10 +45,10 @@ public final class InstituicaoDAO implements IGenericDAO<Instituicao> {
         return instituicoes;
     }
 
-    public List<Instituicao> buscarPorId(Long id) throws SQLException, ClassNotFoundException {
+    public List<Instituicao> buscarPorId(Integer codigo) throws SQLException, ClassNotFoundException {
         InstituicaoRepository instituicaoRepository = new InstituicaoRepository();
-        List<Instituicao> seguros1 = instituicaoRepository.buscaPorId(id);
-        return seguros1;
+        List<Instituicao> instituicoes = instituicaoRepository.buscaPorId(codigo);
+        return instituicoes;
     }
 
 

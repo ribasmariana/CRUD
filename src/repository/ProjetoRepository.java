@@ -18,7 +18,7 @@ public class ProjetoRepository extends Conectora {
         stmt.setString(1, projeto.getNome());
         stmt.setString(2, projeto.getDescricao());
         stmt.setString(3, projeto.getCoordenacao());
-        stmt.setInt(4, projeto.getInstituicao().getCodigo().intValue());
+        stmt.setInt(4, projeto.getInstituicao().getCodigo());
         stmt.setInt(5, projeto.getTipo().ordinal());
         stmt.setInt(6, projeto.getCategoria().ordinal());
 
@@ -30,7 +30,7 @@ public class ProjetoRepository extends Conectora {
         List<Projeto> projetos = new ArrayList<>();
         Connection connection = getConnection();
 
-        PreparedStatement stmt = connection.prepareStatement("select * from projeto WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("select * from projeto WHERE cd_projeto = ?");
         stmt.setInt(1, codigo);
         ResultSet resultSet = stmt.executeQuery();
 
@@ -43,7 +43,7 @@ public class ProjetoRepository extends Conectora {
 
             //FK
             InstituicaoRepository instituicaoRepository = new InstituicaoRepository();
-            projeto.setInstituicao(instituicaoRepository.buscaPorId(resultSet.getLong(5)).get(0));
+            projeto.setInstituicao(instituicaoRepository.buscaPorId(resultSet.getInt(5)).get(0));
             projeto.setTipo(TipoProjeto.getTipoById(resultSet.getInt(6)));
             projeto.setCategoria(Categoria.getCategoriaById(resultSet.getInt(7)));
 
@@ -69,7 +69,7 @@ public class ProjetoRepository extends Conectora {
 
             //FK
             InstituicaoRepository instituicaoRepository = new InstituicaoRepository();
-            projeto.setInstituicao(instituicaoRepository.buscaPorId(resultSet.getLong(5)).get(0));
+            projeto.setInstituicao(instituicaoRepository.buscaPorId(resultSet.getInt(5)).get(0));
             projeto.setTipo(TipoProjeto.getTipoById(resultSet.getInt(6)));
             projeto.setCategoria(Categoria.getCategoriaById(resultSet.getInt(7)));
 
@@ -81,11 +81,11 @@ public class ProjetoRepository extends Conectora {
     }
     public Integer proximoId() throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
-        PreparedStatement stmt = connection.prepareStatement("select max(id) from projeto");
+        PreparedStatement stmt = connection.prepareStatement("select max(cd_projeto) from projeto");
         ResultSet resultSet = stmt.executeQuery();
 
         while (resultSet.next()) {
-            return resultSet.getInt(1) + 1;
+           // return resultSet.getInt(1) + 1;
         }
         return 1;
     }
@@ -93,11 +93,11 @@ public class ProjetoRepository extends Conectora {
         Connection connection = getConnection();
 
         PreparedStatement stmt = connection.prepareStatement("update seguros " +
-                "SET nome = ?, descricao = ?, coordenacao = ?, instituicao = ?, tipo = ?, categoria = ? WHERE id = ?");
+                "SET nome = ?, descricao = ?, coordenacao = ?, instituicao = ?, tipo = ?, categoria = ? WHERE cd_projeto = ?");
         stmt.setString(1, projeto.getNome());
         stmt.setString(2, projeto.getDescricao());
         stmt.setString(3, projeto.getCoordenacao());
-        stmt.setInt(4, projeto.getInstituicao().getCodigo().intValue());
+        stmt.setInt(4, projeto.getInstituicao().getCodigo());
         stmt.setInt(5, projeto.getTipo().ordinal());
         stmt.setInt(6, projeto.getCategoria().ordinal());
         stmt.setInt(7, projeto.getCodigo().intValue());
@@ -109,7 +109,7 @@ public class ProjetoRepository extends Conectora {
     public void delete(Projeto projeto) throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
         PreparedStatement stmt = connection.prepareStatement("DELETE FROM projeto" +
-                " WHERE id = ?");
+                " WHERE cd_projeto = ?");
         stmt.setInt(1, projeto.getCodigo().intValue());
         stmt.executeUpdate();
         connection.close();

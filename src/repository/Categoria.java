@@ -1,17 +1,22 @@
 package repository;//ISTO SERÁ UMA ENUM
 
 public enum Categoria {
-    TECNOLOGIA("Tecnologia"),
-    ENGENHARIA("Engenharia"),
-    AGRONOMIA("Agronomia"),
-    SAUDE("Saúde"),
-    EDUCACAO("Educação"),
-    SOCIAL("Social");
+    TECNOLOGIA(1,"Tecnologia"),
+    ENGENHARIA(2,"Engenharia"),
+    AGRONOMIA(3,"Agronomia"),
+    SAUDE(4,"Saúde"),
+    EDUCACAO(5,"Educação"),
+    SOCIAL(6,"Social");
 
     private String descricaoCategoria;
-
-    Categoria (String descricaoCategoria) {
+    private Integer codigo;
+    Categoria (Integer codigo,String descricaoCategoria) {
+        this.codigo = codigo;
         this.descricaoCategoria = descricaoCategoria;
+    }
+
+    public Integer getCodigo() {
+        return codigo;
     }
 
     public static Categoria getCategoriaById(Integer opcao) {
@@ -25,8 +30,10 @@ public enum Categoria {
             return SAUDE;
         }  else if (opcao == 5) {
             return EDUCACAO;
-        } else {
+        } else if(opcao == 6){
             return SOCIAL;
+        }else{
+            return null;
         }
     }
 
