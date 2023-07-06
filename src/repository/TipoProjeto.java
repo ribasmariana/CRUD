@@ -1,17 +1,19 @@
 package repository;//ISTO SERÁ UMA ENUM
 
 public enum TipoProjeto {
-    PESQUISA("Pesquisa"),
-    EXTENSAO("Extensão"),
-    GRADUACAO("Graduação"),
-    POS_GRADUACAO("Pós graduação"),
-    MESTRADO("Mestrado"),
-    DOUTORADO("Doutorado"),
-    STARTUP("Startup");
+    PESQUISA(1,"Pesquisa"),
+    EXTENSAO(2,"Extensão"),
+    GRADUACAO(3,"Graduação"),
+    POS_GRADUACAO(4,"Pós graduação"),
+    MESTRADO(5,"Mestrado"),
+    DOUTORADO(6,"Doutorado"),
+    STARTUP(7,"Startup");
 
     private String descricaoTipo;
+    private Integer codigo;
 
-    TipoProjeto(String descricaoTipo) {
+    TipoProjeto(Integer codigo ,String descricaoTipo) {
+        this.codigo = codigo;
         this.descricaoTipo = descricaoTipo;
     }
 
@@ -40,8 +42,10 @@ public enum TipoProjeto {
              return MESTRADO;
         }  else if (opcao == 6) {
              return DOUTORADO;
-            } else {
+            } else if (opcao == 7){
             return STARTUP;
+        }else {
+            return null;
         }
     }
 

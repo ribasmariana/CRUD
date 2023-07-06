@@ -18,7 +18,7 @@ public final class RedeSocialDAO implements IGenericDAO<RedeSocial>{
             if (redeSocial.getId() != null) {
                 redeSocialRepository.update(redeSocial);
             } else {
-                redeSocial.setId(redeSocialRepository.proximoId().intValue());
+              //  redeSocial.setId(redeSocialRepository.proximoId().intValue());
                 redeSocialRepository.insere(redeSocial);
             }
         } catch (SQLException | ClassNotFoundException e) {

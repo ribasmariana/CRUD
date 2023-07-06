@@ -5,6 +5,8 @@ public class RedeSocial {
     private Integer id;
     private String descricao;
 
+    private Integer codigoInstituicao;
+
     public Integer getId() {
         return id;
     }
@@ -21,8 +23,15 @@ public class RedeSocial {
         this.descricao = descricao;
     }
 
+    public Integer getCodigoInstituicao() {
+        return codigoInstituicao;
+    }
 
-   public RedeSocial(){
+    public void setCodigoInstituicao(Integer codigoInstituicao) {
+        this.codigoInstituicao = codigoInstituicao;
+    }
+
+    public RedeSocial(){
 
    }
     public RedeSocial(Integer id, String descricao) {
@@ -33,5 +42,15 @@ public class RedeSocial {
     public RedeSocial(String descricao) {
         this.descricao = descricao;
     }
+
+    @Override
+    public String toString() {
+        return "RedeSocial{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", codigoInstituicao=" + codigoInstituicao +
+                '}';
+    }
 }
+
 

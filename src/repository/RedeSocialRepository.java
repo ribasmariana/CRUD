@@ -14,10 +14,10 @@ public class RedeSocialRepository extends Conectora{
         Connection connection = getConnection();
 
         PreparedStatement stmt = connection.prepareStatement("insert into " +
-                "pessoa values(null,?)");
+                "rede_social  values(null,?,?)");
 
         stmt.setString(1, redeSocial.getDescricao());
-
+        stmt.setInt(2,redeSocial.getCodigoInstituicao());
 
         int i = stmt.executeUpdate();
         System.out.println(i + " linhas inseridas");
@@ -37,7 +37,7 @@ public class RedeSocialRepository extends Conectora{
             RedeSocial redeSocial = new RedeSocial();
             redeSocial.setId(resultSet.getInt(1));
             redeSocial.setDescricao(resultSet.getString(2));
-
+            redeSocial.setCodigoInstituicao(resultSet.getInt(3));
             redesSociais.add(redeSocial);
 
 
@@ -57,7 +57,7 @@ public class RedeSocialRepository extends Conectora{
                 RedeSocial redeSocial = new RedeSocial();
                 redeSocial.setId(resultSet.getInt(1));
                 redeSocial.setDescricao(resultSet.getString(2));
-
+                redeSocial.setCodigoInstituicao(resultSet.getInt(3));
                 redesSociais.add(redeSocial);
 
 
@@ -78,10 +78,10 @@ public class RedeSocialRepository extends Conectora{
     public void update(RedeSocial redeSocial) throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
 
-        PreparedStatement stmt = connection.prepareStatement("update pessoa " +
-                "SET nome = ?, WHERE id = ?");
+        PreparedStatement stmt = connection.prepareStatement("update rede_social " +
+                "SET nm_rede = ? WHERE cd_rede_social = ?");
         stmt.setString(1, redeSocial.getDescricao());
-        stmt.setInt(2, redeSocial.getId().intValue());
+        stmt.setInt(2, redeSocial.getId());
 
         int i = stmt.executeUpdate();
         System.out.println(i + " linhas atualizadas");
@@ -90,7 +90,7 @@ public class RedeSocialRepository extends Conectora{
     public void delete(RedeSocial redeSocial) throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
         PreparedStatement stmt = connection.prepareStatement("DELETE FROM rede_social" +
-                " WHERE id = ?");
+                " WHERE cd_rede_social = ?");
         stmt.setInt(1, redeSocial.getId().intValue());
         stmt.executeUpdate();
         connection.close();

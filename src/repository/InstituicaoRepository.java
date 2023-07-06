@@ -13,25 +13,25 @@ public class InstituicaoRepository extends Conectora {
         Connection connection = getConnection();
 
         PreparedStatement stmt = connection.prepareStatement("insert into " +
-                "instituicao values(null, ?, ?, ?, ?, ?,?,?)");
+                "instituicao values(null, ?, ?, ?, ?, ?,?)");
         stmt.setString(1, instituicao.getNome());
         stmt.setString(2, instituicao.getRua());
         stmt.setString(3, instituicao.getBairro());
         stmt.setString(4, instituicao.getNumero());
         stmt.setString(5, instituicao.getTelefone());
         stmt.setObject(6, instituicao.getCidade());
-        stmt.setObject(7,  instituicao.getRedeSocial());
+       // stmt.setObject(7,  instituicao.getRedeSocial());
 
         int i = stmt.executeUpdate();
         System.out.println(i + " linhas inseridas");
         connection.close();
     }
-    public List<Instituicao> buscaPorId(Long id) throws SQLException, ClassNotFoundException {
+    public List<Instituicao> buscaPorId(Integer codigo) throws SQLException, ClassNotFoundException {
         List<Instituicao> instituicoes = new ArrayList<>();
         Connection connection = getConnection();
 
-        PreparedStatement stmt = connection.prepareStatement("select * from instituicao WHERE id = ?");
-        stmt.setLong(1, id);
+        PreparedStatement stmt = connection.prepareStatement("select * from instituicao WHERE cd_instituicao = ?");
+        stmt.setLong(1, codigo);
         ResultSet resultSet = stmt.executeQuery();
 
         while (resultSet.next()) {
@@ -46,7 +46,7 @@ public class InstituicaoRepository extends Conectora {
 
             //FK
             CidadeRepository cidadeRepository = new CidadeRepository();
-            instituicao.setCidade(cidadeRepository.buscaPorId(resultSet.getLong(7)).get(0));
+            instituicao.setCidade(cidadeRepository.buscaPorId(resultSet.getInt(7)).get(0));
 
             //FK
             RedeSocialRepository redeSocialRepository = new RedeSocialRepository();
@@ -80,12 +80,7 @@ public class InstituicaoRepository extends Conectora {
 
             //FK
             CidadeRepository cidadeRepository = new CidadeRepository();
-            instituicao.setCidade(cidadeRepository.buscaPorId(resultSet.getLong(7)).get(0));
-
-            //FK
-            RedeSocialRepository redeSocialRepository = new RedeSocialRepository();
-
-            instituicao.setRedeSocial(redeSocialRepository.buscaPorId(resultSet.getLong(8)).get(0));
+            instituicao.setCidade(cidadeRepository.buscaPorId(resultSet.getInt(7)).get(0));
 
 
 
