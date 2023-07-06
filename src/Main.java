@@ -276,16 +276,19 @@ public class Main {
 
         Projeto projeto = new Projeto();
         projeto.setNome(nome);
-        projeto.setTipo(tipoSelecionado);
         projeto.setDescricao(descricao);
         projeto.setCoordenacao(coordenacao);
+        projeto.setTipo(tipoSelecionado);
         projeto.setCategoria(categoriaSelecionada);
         projeto.setInstituicao(instituicaos.get(0));
+        getProjetoDAO().salvar(projeto);
+
 
         JOptionPane.showMessageDialog(null, "Projeto cadastrado com sucesso!");
         chamaMenuPrincipal();
-        getProjetoDAO().salvar(projeto);
+
         return projeto;
+
     }
 
     private static Projeto chamaAlterarProjeto() throws SQLException, ClassNotFoundException {
