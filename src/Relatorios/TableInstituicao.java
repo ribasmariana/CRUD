@@ -55,7 +55,7 @@ public class TableInstituicao extends AbstractTableModel {
             case INDEX_TELEFONE:
                 return registroInstituicao.getTelefone();
             case INDEX_REDES_SOCIAS:
-                return registroInstituicao.getRedeSocial();
+                return registroInstituicao.getRedesSociais();
             default:
                 return new Object();
         }

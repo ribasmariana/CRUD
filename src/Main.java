@@ -117,25 +117,32 @@ public class Main {
         Object[] selectionValuesCidades = getCidadeDAO().findCidadesInArray();
         String initialSelectionCidade = (String) selectionValuesCidades[0];
         Object selectionCidade = JOptionPane.showInputDialog(null, "Selecione a cidade que deseja alterar",
-                "Cidades", JOptionPane.QUESTION_MESSAGE, null, selectionValuesCidades, selectionValuesCidades);
+                "Cidades", JOptionPane.QUESTION_MESSAGE, null, selectionValuesCidades, initialSelectionCidade);
+
+        if (selectionCidade == null) {
+            chamaMenuPrincipal(); // Chama o menu principal quando o usuário clicar em "Cancelar"
+            return null;
+        }
+
         List<Cidade> cidades = getCidadeDAO().buscarPorNome((String) selectionCidade);
         Cidade cidade = cidades.get(0);
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome da cidade", cidade.getNome());
         if (nome == null) {
-            chamaCadastroCidade();
+            chamaMenuPrincipal(); // Chama o menu principal quando o usuário clicar em "Cancelar"
+            return null;
         }
 
         String uf = JOptionPane.showInputDialog(null, "Informe a UF da cidade", cidade.getUf());
         if (uf == null) {
-            chamaCadastroCidade();
+            chamaMenuPrincipal(); // Chama o menu principal quando o usuário clicar em "Cancelar"
+            return null;
         }
 
         cidade.setNome(nome);
         cidade.setUf(uf);
         getCidadeDAO().salvar(cidade);
         return cidade;
-
     }
 
     private static Cidade chamaExcluirCidade() throws SQLException, ClassNotFoundException {
@@ -148,12 +155,13 @@ public class Main {
             getCidadeDAO().remover(cidadeSelecionada);
 
             JOptionPane.showMessageDialog(null, "Cidade removida com sucesso!");
-            chamaMenuPrincipal();
+            return cidadeSelecionada;
         }
+        chamaMenuPrincipal(); // Chama o menu principal quando o usuário clicar em "Cancelar"
         return null;
     }
 
-    static void chamaRelatorioCidade() {
+    public static void chamaRelatorioCidade() {
         List<Cidade> cidades = getCidadeDAO().buscarTodos();
         RelatorioCidadeForm.emitirRelatorio(cidades);
     }
@@ -176,20 +184,23 @@ public class Main {
                     break;
                 case 1:
                     Projeto projetoAlterado = chamaAlterarProjeto();
-                    JOptionPane.showMessageDialog(null, "Projeto " + projetoAlterado.getNome() + " alterado com sucesso!");
-                    chamaMenuPrincipal();
+                    if (projetoAlterado != null) {
+                        JOptionPane.showMessageDialog(null, "Projeto " + projetoAlterado.getNome() + " alterado com sucesso!");
+                    }
                     break;
                 case 2:
                     Projeto projetoExcluido = chamaExcluirProjeto();
-                    JOptionPane.showMessageDialog(null, "Projeto " + projetoExcluido.getNome() + " excluído com sucesso!");
-                    chamaMenuPrincipal();
+                    if (projetoExcluido != null) {
+                        JOptionPane.showMessageDialog(null, "Projeto " + projetoExcluido.getNome() + " excluído com sucesso!");
+                    }
                     break;
                 case 3:
                     chamaRelatorioProjeto();
-                    chamaMenuPrincipal();
                     break;
                 case 4:
-                    chamaMenuPrincipal();
+                    return; // Retorna ao menu principal
+                default:
+                    chamaMenuPrincipal(); // Tratar retorno inesperado como retorno ao menu principal
                     break;
             }
         }
