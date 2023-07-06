@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Instituicao {
 
@@ -11,21 +12,20 @@ public class Instituicao {
     private String numero;
     private String telefone;
     private Cidade cidade;
-    private RedeSocial redeSocial ;
+    private List <RedeSocial> redesSociais = new ArrayList<>() ;
 
     public Instituicao(){
 
     }
 
-    public Instituicao(String nome, String rua, String bairro, String numero, String telefone,
-                       Cidade cidade, RedeSocial redeSocial) {
+    public Instituicao(String nome, String rua, String bairro, String numero, String telefone, Cidade cidade, List<RedeSocial> redesSociais) {
         this.nome = nome;
         this.rua = rua;
         this.bairro = bairro;
         this.numero = numero;
         this.telefone = telefone;
         this.cidade = cidade;
-        this.redeSocial = redeSocial;
+        this.redesSociais = redesSociais;
     }
 
     public Integer getCodigo() {
@@ -76,14 +76,12 @@ public class Instituicao {
         this.telefone = telefone;
     }
 
-    public RedeSocial getRedeSocial() {
-        return redeSocial;
+    public List<RedeSocial> getRedesSociais() {
+        return redesSociais;
     }
 
-
-    public void setRedeSocial(RedeSocial redeSocial) {
-        this.redeSocial = redeSocial;
-
+    public void setRedesSociais(List<RedeSocial> redesSociais) {
+        this.redesSociais = redesSociais;
     }
 
     public Cidade getCidade() {
@@ -103,7 +101,7 @@ public class Instituicao {
                 ", bairro='" + bairro + '\'' +
                 ", numero='" + numero + '\'' +
                 ", telefone='" + telefone + '\'' +
-                ", redesSociais=" + redeSocial +
+                ", redesSociais=" + redesSociais +
                 '}';
     }
 }

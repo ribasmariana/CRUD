@@ -1,6 +1,7 @@
 package repository;
 
 import model.Instituicao;
+import model.RedeSocial;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -48,10 +49,10 @@ public class InstituicaoRepository extends Conectora {
             CidadeRepository cidadeRepository = new CidadeRepository();
             instituicao.setCidade(cidadeRepository.buscaPorId(resultSet.getInt(7)).get(0));
 
-            //FK
-            RedeSocialRepository redeSocialRepository = new RedeSocialRepository();
 
-            instituicao.setRedeSocial(redeSocialRepository.buscaPorId(resultSet.getLong(8)).get(0));
+        //    RedeSocialRepository redeSocialRepository = new RedeSocialRepository();
+
+           // instituicao.setRedeSocial(redeSocialRepository.buscaPorId(resultSet.getLong(8)).get(0));
 
 
 
@@ -82,7 +83,10 @@ public class InstituicaoRepository extends Conectora {
             CidadeRepository cidadeRepository = new CidadeRepository();
             instituicao.setCidade(cidadeRepository.buscaPorId(resultSet.getInt(7)).get(0));
 
+            RedeSocialRepository redeSocialRepository = new RedeSocialRepository();
+            List<RedeSocial> redeSocials = redeSocialRepository.buscaPorIstituicao(instituicao.getCodigo());
 
+            instituicao.setRedesSociais(redeSocials);
 
             instituicoes.add(instituicao);
         }
@@ -110,7 +114,7 @@ public class InstituicaoRepository extends Conectora {
         stmt.setString(4, instituicao.getNumero());
         stmt.setString(5, instituicao.getTelefone());
         stmt.setObject(6, instituicao.getCidade());
-        stmt.setObject(7,  instituicao.getRedeSocial());
+        stmt.setObject(7,  instituicao.getRedesSociais());
         stmt.setInt(8, instituicao.getCodigo());
 
 
