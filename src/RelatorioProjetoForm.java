@@ -20,6 +20,7 @@ public class RelatorioProjetoForm extends JPanel {
     protected JScrollPane scroller;
     protected TableProjeto tabela;
 
+
     public RelatorioProjetoForm(Vector<Projeto> vetorDados) {
         iniciarComponentes(vetorDados);
     }
