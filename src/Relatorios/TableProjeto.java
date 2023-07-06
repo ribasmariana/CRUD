@@ -61,6 +61,7 @@ public class TableProjeto extends AbstractTableModel {
         }
     }
 
+
     @Override
     public int getRowCount() {
         return vetorDados.size();
