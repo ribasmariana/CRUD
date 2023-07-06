@@ -15,12 +15,12 @@ public class ProjetoRepository extends Conectora {
         PreparedStatement stmt = connection.prepareStatement("insert into " +
                 "projeto values(null, ?, ?, ?, ?, ?,?)");
 
-        stmt.setString(2, projeto.getNome());
-        stmt.setString(3, projeto.getDescricao());
-        stmt.setString(4, projeto.getCoordenacao());
-        stmt.setInt(5, projeto.getInstituicao().getCodigo().intValue());
-        stmt.setInt(6, projeto.getTipo().ordinal());
-        stmt.setInt(7, projeto.getCategoria().ordinal());
+        stmt.setString(1, projeto.getNome());
+        stmt.setString(2, projeto.getDescricao());
+        stmt.setString(3, projeto.getCoordenacao());
+        stmt.setInt(4, projeto.getInstituicao().getCodigo().intValue());
+        stmt.setInt(5, projeto.getTipo().ordinal());
+        stmt.setInt(6, projeto.getCategoria().ordinal());
 
         int i = stmt.executeUpdate();
         System.out.println(i + " linhas inseridas");

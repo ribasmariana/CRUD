@@ -1,8 +1,8 @@
 import model.Cidade;
 import model.Instituicao;
 import model.Projeto;
+import model.RedeSocial;
 import repository.*;
-
 import javax.swing.*;
 import java.sql.SQLException;
 import java.util.List;
@@ -38,8 +38,11 @@ public class Main {
             case 2: //Instituições
                 chamaMenuInstituicoes();
                 break;
+            case 3: //redesSociais
+                chamaMenuRedesSociais();
+                break;
 
-            case 3: //SAIR
+                case 4: //SAIR
                 int opcaoSair = JOptionPane.showOptionDialog(null, " Deseja realmente sair ? ",
                         "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
@@ -96,6 +99,8 @@ public class Main {
         Cidade cidade = new Cidade();
         cidade.setNome(nome);
         cidade.setUf(uf);
+
+        getCidadeDAO().salvar(cidade);
         return cidade;
 
     }
@@ -120,7 +125,7 @@ public class Main {
 
         cidade.setNome(nome);
         cidade.setUf(uf);
-
+        getCidadeDAO().salvar(cidade);
         return cidade;
 
     }
@@ -252,6 +257,7 @@ public class Main {
 
         JOptionPane.showMessageDialog(null, "Projeto cadastrado com sucesso!");
         chamaMenuPrincipal();
+        getProjetoDAO().salvar(projeto);
         return projeto;
     }
 
@@ -338,6 +344,7 @@ public class Main {
 
         JOptionPane.showMessageDialog(null, "Cadastro de projeto alterado com sucesso!");
         chamaMenuPrincipal();
+        getProjetoDAO().salvar(projeto);
         return projeto;
     }
 
@@ -413,21 +420,38 @@ public class Main {
         if (telefone == null) {
             chamaCadastroInstituicao();
         }
-//        String cidade = JOptionPane.showInputDialog(null, "Informe a cidade da instituição");
-//        if (cidade == null) {
-//            chamaCadastroInstituicao();
-//        }
 
-//        Object[] selectionInstituicao = instituicaos.stream().map(Instituicao::getNome).toArray();
-//        String initialSelectionInstituicao = (String) selectionInstituicao[0];
-//
-//        Object selecInstituicao = JOptionPane.showInputDialog(null, "Selecione a instituição",
-//                "Instituições", JOptionPane.QUESTION_MESSAGE, null, selectionInstituicao, initialSelectionInstituicao);
-//
-//        if (selecInstituicao == null) {
-//            JOptionPane.showMessageDialog(null, "Cadastro de instituição cancelado.");
-//            chamaMenuPrincipal();
-//        }
+         List<Cidade> cidades = getCidadeDAO().buscarTodos();
+
+        if (cidades.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhuma Cidade cadastrada!");
+
+        }
+       Object[] selectionCidade = cidades.stream().map(Cidade::getNome).toArray();
+       String initialSelectionCidade = (String) selectionCidade[0];
+       Object selecCidade = JOptionPane.showInputDialog(null, "Selecione a Cidade",
+                "Cidades", JOptionPane.QUESTION_MESSAGE, null, selectionCidade, initialSelectionCidade);
+
+        if (selecCidade == null) {
+           JOptionPane.showMessageDialog(null, "Cadastro de Instituição cancelado.");
+          chamaMenuPrincipal();
+       }
+
+        List<RedeSocial> redeSociais = getRedeSocialDAO().buscarTodos();
+
+        if (redeSociais.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhuma Rede Social cadastrada!");
+
+        }
+        Object[] selectionRedeSocial = redeSociais.stream().map(RedeSocial::getDescricao).toArray();
+        String initialSelectionRedeSocial = (String) selectionRedeSocial[0];
+        Object selecRede = JOptionPane.showInputDialog(null, "Selecione a Rede Social",
+                "Redes Sociais", JOptionPane.QUESTION_MESSAGE, null, selectionRedeSocial, initialSelectionRedeSocial);
+
+        if (selecRede == null) {
+            JOptionPane.showMessageDialog(null, "Cadastro de Instituição cancelado.");
+            chamaMenuPrincipal();
+        }
 
         Instituicao instituicao = new Instituicao();
         instituicao.setNome(nome);
@@ -435,8 +459,9 @@ public class Main {
         instituicao.setBairro(bairro);
         instituicao.setNumero(numero);
         instituicao.setTelefone(telefone);
-//        instituicao.setCidade(cidade.cidade);
-
+        instituicao.setCidade(cidades.get(0));
+        instituicao.setRedeSocial(redeSociais.get(0));
+        getInstituicaoDAO().salvar(instituicao);
         return instituicao;
     }
 
@@ -470,21 +495,49 @@ public class Main {
         if (telefone == null) {
             chamaCadastroInstituicao();
         }
-//        String cidade = JOptionPane.showInputDialog(null, "Informe a cidade da instituição",instituicao.getCidade());
-//        if (cidade == null) {
-//            chamaCadastroInstituicao();
-//        }
+        List<Cidade> cidades = getCidadeDAO().buscarTodos();
+
+        if (cidades.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhuma Cidade cadastrada!");
+
+        }
+        Object[] selectionCidade = cidades.stream().map(Cidade::getNome).toArray();
+        String initialSelectionCidade = (String) selectionCidade[0];
+        Object selecCidade = JOptionPane.showInputDialog(null, "Selecione a Cidade",
+                "Cidades", JOptionPane.QUESTION_MESSAGE, null, selectionCidade, initialSelectionCidade);
+
+        if (selecCidade == null) {
+            JOptionPane.showMessageDialog(null, "Alteração de Instituição cancelada.");
+            chamaMenuPrincipal();
+        }
+        List<RedeSocial> redeSociais = getRedeSocialDAO().buscarTodos();
+
+        if (redeSociais.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhuma Rede Social cadastrada!");
+
+        }
+        Object[] selectionRedeSocial = redeSociais.stream().map(RedeSocial::getDescricao).toArray();
+        String initialSelectionRedeSocial = (String) selectionRedeSocial[0];
+        Object selecRede = JOptionPane.showInputDialog(null, "Selecione a Rede Social",
+                "Redes Sociais", JOptionPane.QUESTION_MESSAGE, null, selectionRedeSocial, initialSelectionRedeSocial);
+
+        if (selecRede == null) {
+            JOptionPane.showMessageDialog(null, "Alteração de Instituição cancelada.");
+            chamaMenuPrincipal();
+        }
+
 
         instituicao.setNome(nome);
         instituicao.setRua(rua);
         instituicao.setBairro(bairro);
         instituicao.setNumero(numero);
         instituicao.setTelefone(telefone);
-//        instituicao.setCidade(cidade);
+        instituicao.setCidade(cidades.get(0));
+        instituicao.setRedeSocial(redeSociais.get(0));
 
-        JOptionPane.showMessageDialog(null, "Projeto alterado com sucesso!");
+        JOptionPane.showMessageDialog(null, "instituição alterada com sucesso!");
         chamaMenuPrincipal();
-
+        getInstituicaoDAO().salvar(instituicao);
         return instituicao;
 
     }
@@ -507,6 +560,83 @@ public class Main {
         RelatorioInstituicaoForm.emitirRelatorio(instituicaos);
     }
 
+    public static void chamaMenuRedesSociais() throws SQLException, ClassNotFoundException {
+        String[] opcoesMenuRedesSociais = {"Cadastrar", "Alterar", "Excluir", "Gerar relatório", "Voltar"};
+        int menuRede = JOptionPane.showOptionDialog(null, "Escolha o processo que deseja realizar",
+                "Rede Social",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, opcoesMenuRedesSociais, opcoesMenuRedesSociais[0]);
+
+        switch (menuRede) {
+            case 0:
+                RedeSocial redeSocialCriada = chamaCadastroRedeSocial();
+                JOptionPane.showMessageDialog(null, "Rede Social " + redeSocialCriada.getDescricao() + " cadastrada com sucesso!");
+                chamaMenuPrincipal();
+                break;
+            case 1:
+                RedeSocial redeSocialAlterada = chamaAlterarRedeSocial();
+                JOptionPane.showMessageDialog(null, "Rede Social " + redeSocialAlterada.getDescricao() + " alterada com sucesso!");
+                chamaMenuPrincipal();
+                break;
+            case 2:
+                RedeSocial redeSocialExcluida = chamaExcluirRedeSocial();
+                JOptionPane.showMessageDialog(null, "Rede Social " + redeSocialExcluida.getDescricao() + " excluída com sucesso!");
+                chamaMenuPrincipal();
+                break;
+
+        }
+    }
+    private static RedeSocial chamaCadastroRedeSocial() {
+
+        String nome = JOptionPane.showInputDialog(null, "Informe o nome da RedeSocial");
+        if (nome == null) {
+            chamaCadastroRedeSocial();
+        }
+
+
+        RedeSocial redeSocial = new RedeSocial();
+        redeSocial.setDescricao(nome);
+
+
+        getRedeSocialDAO().salvar(redeSocial);
+        return redeSocial;
+
+    }
+    private static RedeSocial chamaAlterarRedeSocial() throws SQLException, ClassNotFoundException {
+        Object[] selectionValuesRedeSocial = getRedeSocialDAO().findRedesSociaisInArray();
+        String initialSelectionRedeSocial = (String) selectionValuesRedeSocial[0];
+        Object selectionRede = JOptionPane.showInputDialog(null, "Selecione a Rede Social que deseja alterar",
+                "Redes Sociais", JOptionPane.QUESTION_MESSAGE, null, selectionValuesRedeSocial, selectionValuesRedeSocial);
+        List<RedeSocial> redesSociais = getRedeSocialDAO().buscarPorNome((String) selectionRede);
+        RedeSocial redeSocial = redesSociais.get(0);
+
+        String nome = JOptionPane.showInputDialog(null, "Informe o nome da Rede Social", redeSocial.getDescricao());
+        if (nome == null) {
+            chamaCadastroCidade();
+        }
+
+        redeSocial.setDescricao(nome);
+
+        getRedeSocialDAO().salvar(redeSocial);
+        return redeSocial;
+
+    }
+    private static RedeSocial chamaExcluirRedeSocial() throws SQLException, ClassNotFoundException {
+        Object[] selectionValuesRedesSociais = getRedeSocialDAO().buscarTodos().toArray(new RedeSocial[0]);
+        Object selectionRedesSociais = JOptionPane.showInputDialog(null, "Selecione a Rede Social que deseja remover:",
+                "Remover Rede Social", JOptionPane.DEFAULT_OPTION, null, selectionValuesRedesSociais, null);
+
+        if (selectionRedesSociais != null) {
+            RedeSocial redeSocialSelecionada = (RedeSocial) selectionRedesSociais;
+            getRedeSocialDAO().remover(redeSocialSelecionada);
+
+            JOptionPane.showMessageDialog(null, "Rede Social removida com sucesso!");
+            chamaMenuPrincipal();
+        }
+        return null;
+    }
+
+
+
 
     public static ProjetoDAO getProjetoDAO() {
         ProjetoDAO projetoDAO = new ProjetoDAO();
@@ -522,5 +652,10 @@ public class Main {
         CidadeDAO cidadeDAO = new CidadeDAO();
         return cidadeDAO;
     }
+        public static RedeSocialDAO getRedeSocialDAO() {
+            RedeSocialDAO redeSocialDAO = new RedeSocialDAO();
+            return redeSocialDAO;
+        }
 
-}
+
+    }
