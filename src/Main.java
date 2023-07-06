@@ -80,6 +80,10 @@ public class Main {
                 break;
             case 3:
                 chamaRelatorioCidade();
+                chamaMenuPrincipal();
+                break;
+            case 4:
+                chamaMenuPrincipal();
                 break;
         }
     }
@@ -176,6 +180,10 @@ public class Main {
                 break;
             case 3:
                 chamaRelatorioProjeto();
+                chamaMenuPrincipal();
+                break;
+            case 4:
+                chamaMenuPrincipal();
                 break;
         }
     }
@@ -391,6 +399,10 @@ public class Main {
                 break;
             case 3:
                 chamaRelatorioInstituicao();
+                chamaMenuPrincipal();
+                break;
+            case 4:
+                chamaMenuPrincipal();
                 break;
         }
     }
@@ -590,7 +602,13 @@ public class Main {
                 JOptionPane.showMessageDialog(null, "Rede Social " + redeSocialExcluida.getDescricao() + " excluída com sucesso!");
                 chamaMenuPrincipal();
                 break;
-
+            case 3:
+                chamaRelatorioRedeSocial();
+                chamaMenuPrincipal();
+                break;
+            case 4:
+                chamaMenuPrincipal();
+                break;
         }
     }
     private static RedeSocial chamaCadastroRedeSocial() throws SQLException, ClassNotFoundException {
@@ -660,8 +678,10 @@ public class Main {
         return null;
     }
 
-
-
+    static void chamaRelatorioRedeSocial() {
+        List<RedeSocial> redeSocials = getRedeSocialDAO().buscarTodos();
+        RelatorioRedeSocialForm.emitirRelatorio(redeSocials);
+    }
 
     public static ProjetoDAO getProjetoDAO() {
         ProjetoDAO projetoDAO = new ProjetoDAO();
@@ -681,6 +701,4 @@ public class Main {
             RedeSocialDAO redeSocialDAO = new RedeSocialDAO();
             return redeSocialDAO;
         }
-
-
     }
