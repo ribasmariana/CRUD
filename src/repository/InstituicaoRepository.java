@@ -20,7 +20,7 @@ public class InstituicaoRepository extends Conectora {
         stmt.setString(3, instituicao.getBairro());
         stmt.setString(4, instituicao.getNumero());
         stmt.setString(5, instituicao.getTelefone());
-        stmt.setObject(6, instituicao.getCidade());
+        stmt.setObject(6, instituicao.getCidade().getId());
        // stmt.setObject(7,  instituicao.getRedeSocial());
 
         int i = stmt.executeUpdate();
@@ -95,7 +95,7 @@ public class InstituicaoRepository extends Conectora {
     }
     public Integer proximoId() throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
-        PreparedStatement stmt = connection.prepareStatement("select max(id) from instituicao");
+        PreparedStatement stmt = connection.prepareStatement("select max(cd_i) from instituicao");
         ResultSet resultSet = stmt.executeQuery();
 
         while (resultSet.next()) {
