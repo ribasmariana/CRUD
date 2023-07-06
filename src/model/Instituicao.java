@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Instituicao {
 
@@ -81,8 +80,10 @@ public class Instituicao {
         return redeSocial;
     }
 
+
     public void setRedeSocial(RedeSocial redeSocial) {
         this.redeSocial = redeSocial;
+
     }
 
     public Cidade getCidade() {

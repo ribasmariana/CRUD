@@ -50,7 +50,9 @@ public class InstituicaoRepository extends Conectora {
 
             //FK
             RedeSocialRepository redeSocialRepository = new RedeSocialRepository();
+
             instituicao.setRedeSocial(redeSocialRepository.buscaPorId(resultSet.getLong(8)).get(0));
+
 
 
 
@@ -82,6 +84,7 @@ public class InstituicaoRepository extends Conectora {
 
             //FK
             RedeSocialRepository redeSocialRepository = new RedeSocialRepository();
+
             instituicao.setRedeSocial(redeSocialRepository.buscaPorId(resultSet.getLong(8)).get(0));
 
 

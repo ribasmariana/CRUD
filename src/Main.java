@@ -421,6 +421,7 @@ public class Main {
             chamaCadastroInstituicao();
         }
 
+
          List<Cidade> cidades = getCidadeDAO().buscarTodos();
 
         if (cidades.isEmpty()) {
@@ -453,15 +454,18 @@ public class Main {
             chamaMenuPrincipal();
         }
 
+
         Instituicao instituicao = new Instituicao();
         instituicao.setNome(nome);
         instituicao.setRua(rua);
         instituicao.setBairro(bairro);
         instituicao.setNumero(numero);
         instituicao.setTelefone(telefone);
+
         instituicao.setCidade(cidades.get(0));
         instituicao.setRedeSocial(redeSociais.get(0));
         getInstituicaoDAO().salvar(instituicao);
+
         return instituicao;
     }
 
@@ -495,6 +499,7 @@ public class Main {
         if (telefone == null) {
             chamaCadastroInstituicao();
         }
+
         List<Cidade> cidades = getCidadeDAO().buscarTodos();
 
         if (cidades.isEmpty()) {
@@ -527,17 +532,20 @@ public class Main {
         }
 
 
+
         instituicao.setNome(nome);
         instituicao.setRua(rua);
         instituicao.setBairro(bairro);
         instituicao.setNumero(numero);
         instituicao.setTelefone(telefone);
+
         instituicao.setCidade(cidades.get(0));
         instituicao.setRedeSocial(redeSociais.get(0));
 
         JOptionPane.showMessageDialog(null, "instituição alterada com sucesso!");
         chamaMenuPrincipal();
         getInstituicaoDAO().salvar(instituicao);
+
         return instituicao;
 
     }
