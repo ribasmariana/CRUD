@@ -16,9 +16,9 @@ public class CidadeRepository extends Conectora {
 
         PreparedStatement stmt = connection.prepareStatement("insert into " +
                 "cidade values(null, ?, ?)");
-        //stmt.setInt(1, cidade.getId().intValue());
-        stmt.setString(2, cidade.getNome());
-        stmt.setString(3, cidade.getUf());
+
+        stmt.setString(1, cidade.getNome());
+        stmt.setString(2, cidade.getUf());
 
         int i = stmt.executeUpdate();
         System.out.println(i + " linhas inseridas");

@@ -16,7 +16,7 @@ public class RedeSocialRepository extends Conectora{
         PreparedStatement stmt = connection.prepareStatement("insert into " +
                 "pessoa values(null,?)");
 
-        stmt.setString(2, redeSocial.getDescricao());
+        stmt.setString(1, redeSocial.getDescricao());
 
 
         int i = stmt.executeUpdate();

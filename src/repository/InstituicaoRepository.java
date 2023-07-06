@@ -14,13 +14,13 @@ public class InstituicaoRepository extends Conectora {
 
         PreparedStatement stmt = connection.prepareStatement("insert into " +
                 "instituicao values(null, ?, ?, ?, ?, ?,?,?)");
-        stmt.setString(2, instituicao.getNome());
-        stmt.setString(3, instituicao.getRua());
-        stmt.setString(4, instituicao.getBairro());
-        stmt.setString(5, instituicao.getNumero());
-        stmt.setString(6, instituicao.getTelefone());
-        stmt.setObject(7, instituicao.getCidade());
-        stmt.setArray(8, (Array) instituicao.getRedesSociais());
+        stmt.setString(1, instituicao.getNome());
+        stmt.setString(2, instituicao.getRua());
+        stmt.setString(3, instituicao.getBairro());
+        stmt.setString(4, instituicao.getNumero());
+        stmt.setString(5, instituicao.getTelefone());
+        stmt.setObject(6, instituicao.getCidade());
+        stmt.setObject(7,  instituicao.getRedeSocial());
 
         int i = stmt.executeUpdate();
         System.out.println(i + " linhas inseridas");
@@ -50,7 +50,9 @@ public class InstituicaoRepository extends Conectora {
 
             //FK
             RedeSocialRepository redeSocialRepository = new RedeSocialRepository();
-            instituicao.setRedesSociais();
+
+            instituicao.setRedeSocial(redeSocialRepository.buscaPorId(resultSet.getLong(8)).get(0));
+
 
 
 
@@ -82,7 +84,8 @@ public class InstituicaoRepository extends Conectora {
 
             //FK
             RedeSocialRepository redeSocialRepository = new RedeSocialRepository();
-            instituicao.setRedesSociais();
+
+            instituicao.setRedeSocial(redeSocialRepository.buscaPorId(resultSet.getLong(8)).get(0));
 
 
 
@@ -112,7 +115,7 @@ public class InstituicaoRepository extends Conectora {
         stmt.setString(4, instituicao.getNumero());
         stmt.setString(5, instituicao.getTelefone());
         stmt.setObject(6, instituicao.getCidade());
-        stmt.setArray(7, (Array) instituicao.getRedesSociais());
+        stmt.setObject(7,  instituicao.getRedeSocial());
         stmt.setInt(8, instituicao.getCodigo());
 
 
