@@ -92,7 +92,6 @@ public class Main {
         }
     }
 
-
     private static Cidade chamaCadastroCidade() {
         String nome = JOptionPane.showInputDialog(null, "Informe o nome da cidade");
         if (nome == null) {
@@ -111,8 +110,6 @@ public class Main {
         getCidadeDAO().salvar(cidade);
         return cidade;
     }
-
-
 
     private static Cidade chamaAlterarCidade() throws SQLException, ClassNotFoundException {
         Object[] selectionValuesCidades = getCidadeDAO().findCidadesInArray();
@@ -275,13 +272,15 @@ public class Main {
             chamaMenuPrincipal();
         }
 
+        List<Instituicao> instituicaos1 = getInstituicaoDAO().buscarPorNome((String) selecInstituicao);
+
         Projeto projeto = new Projeto();
         projeto.setNome(nome);
         projeto.setDescricao(descricao);
         projeto.setCoordenacao(coordenacao);
         projeto.setTipo(tipoSelecionado);
         projeto.setCategoria(categoriaSelecionada);
-        projeto.setInstituicao(instituicaos.get(0));
+        projeto.setInstituicao(instituicaos1.get(0));
         getProjetoDAO().salvar(projeto);
 
 

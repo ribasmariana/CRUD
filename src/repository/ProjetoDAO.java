@@ -55,12 +55,13 @@ public class ProjetoDAO implements IGenericDAO<Projeto>{
         }
         return filtradas;
     }
+
     public Object[] findProjetosInArray() {
         List<Projeto> projetos1 = buscarTodos();
         List<String> projetosNomes = new ArrayList<>();
 
         for (Projeto projeto : projetos1) {
-            projetosNomes.add(projeto.getCodigo().toString());
+            projetosNomes.add(projeto.getNome());
         }
 
         return projetosNomes.toArray();
