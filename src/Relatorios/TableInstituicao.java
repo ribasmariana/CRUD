@@ -14,7 +14,8 @@ public class TableInstituicao extends AbstractTableModel {
     public static final int INDEX_NUMERO = 4;
     public static final int INDEX_TELEFONE = 5;
     public static final int INDEX_REDES_SOCIAS = 6;
-    public static final int INDEX_ESCONDIDO = 7;
+    public static final int INDEX_CIDADE = 7;
+    public static final int INDEX_ESCONDIDO = 8;
 
     protected String[] nomeColunas;
     protected Vector<Instituicao> vetorDados;
@@ -56,6 +57,8 @@ public class TableInstituicao extends AbstractTableModel {
                 return registroInstituicao.getTelefone();
             case INDEX_REDES_SOCIAS:
                 return registroInstituicao.getRedesSociais();
+            case INDEX_CIDADE:
+                return registroInstituicao.getCidade().getNome();
             default:
                 return new Object();
         }

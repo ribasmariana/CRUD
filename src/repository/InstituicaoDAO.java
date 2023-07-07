@@ -66,7 +66,7 @@ public final class InstituicaoDAO implements IGenericDAO<Instituicao> {
         List<String> instituicoesNomes = new ArrayList<>();
 
         for (Instituicao instituicao : instituicoes) {
-            instituicoesNomes.add(instituicao.getCodigo().toString());
+            instituicoesNomes.add(instituicao.getNome().toString());
         }
 
         return instituicoesNomes.toArray();

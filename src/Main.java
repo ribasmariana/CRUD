@@ -58,7 +58,7 @@ public class Main {
     /////////////////////////////////////
 
     public static void chamaMenuCidade() throws SQLException, ClassNotFoundException {
-        while (true) {
+
             String[] opcoesMenuCidade = {"Cadastrar", "Alterar", "Excluir", "Gerar relatório", "Voltar"};
             int menuCidade = JOptionPane.showOptionDialog(null, "Escolha o processo que deseja realizar",
                     "CIDADES",
@@ -69,6 +69,7 @@ public class Main {
                     Cidade cidadeCriada = chamaCadastroCidade();
                     if (cidadeCriada != null) {
                         JOptionPane.showMessageDialog(null, "Cidade " + cidadeCriada.getNome() + " cadastrada com sucesso!");
+                        chamaMenuCidade();
                     }
                     break;
                 case 1:
@@ -83,23 +84,26 @@ public class Main {
                     break;
                 case 3:
                     chamaRelatorioCidade();
-                    chamaMenuPrincipal();
+
                     break;
                 case 4:
                     chamaMenuPrincipal();
                     break;
             }
         }
-    }
 
-    private static Cidade chamaCadastroCidade() {
+
+    private static Cidade chamaCadastroCidade() throws SQLException, ClassNotFoundException {
         String nome = JOptionPane.showInputDialog(null, "Informe o nome da cidade");
         if (nome == null) {
-            return null; // Retorna nulo se o usuário clicar em "Cancelar"
+            chamaMenuPrincipal();
+            return null;// Retorna nulo se o usuário clicar em "Cancelar"
+
         }
 
         String uf = JOptionPane.showInputDialog(null, "Informe a UF da cidade");
         if (uf == null) {
+            chamaMenuPrincipal();
             return null; // Retorna nulo se o usuário clicar em "Cancelar"
         }
 
@@ -167,7 +171,7 @@ public class Main {
     ////////////////////////////////
 
     public static void chamaMenuProjetos() throws SQLException, ClassNotFoundException {
-        while (true) {
+
             String[] opcoesMenuProjetos = {"Cadastrar", "Alterar", "Excluir", "Gerar relatório", "Voltar"};
             int menuProjeto = JOptionPane.showOptionDialog(null, "Escolha o processo que deseja realizar",
                     "PROJETOS",
@@ -202,7 +206,7 @@ public class Main {
                     break;
             }
         }
-    }
+
 
 
     private static Projeto chamaCadastroProjeto() throws SQLException, ClassNotFoundException {
@@ -295,7 +299,7 @@ public class Main {
         Object[] selectionValuesProjetos = getProjetoDAO().findProjetosInArray();
         String initialSelectionProjeto = (String) selectionValuesProjetos[0];
         Object selectionProjeto = JOptionPane.showInputDialog(null, "Selecione o projeto que deseja alterar",
-                "Projetos", JOptionPane.QUESTION_MESSAGE, null, selectionValuesProjetos, selectionValuesProjetos);
+                "Projetos", JOptionPane.QUESTION_MESSAGE, null, selectionValuesProjetos, initialSelectionProjeto);
 
         List<Projeto> projetos = getProjetoDAO().buscarPorNome((String) selectionProjeto);
         Projeto projeto = projetos.get(0);
@@ -303,16 +307,19 @@ public class Main {
         String nome = JOptionPane.showInputDialog(null, "Informe o nome do projeto", projeto.getNome());
         if (nome == null) {
             chamaMenuPrincipal();
+
         }
 
         String descricao = JOptionPane.showInputDialog(null, "Informe a descrição do projeto", projeto.getDescricao());
         if (descricao == null) {
             chamaMenuPrincipal();
+
         }
 
         String coordenacao = JOptionPane.showInputDialog(null, "Informe o nome do responsável pelo projeto", projeto.getCoordenacao());
         if (coordenacao == null) {
             chamaMenuPrincipal();
+
         }
 
         TipoProjeto[] tipoProjetos = TipoProjeto.values();
@@ -371,21 +378,22 @@ public class Main {
         projeto.setInstituicao(instituicaos.get(0));
         projeto.setTipo(tipoSelecionado);
         projeto.setCategoria(categoriaSelecionada);
-
+        getProjetoDAO().salvar(projeto);
         JOptionPane.showMessageDialog(null, "Cadastro de projeto alterado com sucesso!");
         chamaMenuPrincipal();
-        getProjetoDAO().salvar(projeto);
+
         return projeto;
     }
 
     private static Projeto chamaExcluirProjeto() throws SQLException, ClassNotFoundException {
-        Object[] selectionValuesProjetos = getProjetoDAO().buscarTodos().toArray(new Projeto[0]);
+        Object[] selectionValuesProjetos = getProjetoDAO().buscarTodos().stream().map(p -> p.getNome()).collect(Collectors.toList()).toArray();
         Object selectionProjetos = JOptionPane.showInputDialog(null, "Selecione o projeto que deseja remover:",
                 "Remover Projeto", JOptionPane.DEFAULT_OPTION, null, selectionValuesProjetos, null);
 
         if (selectionProjetos != null) {
             Projeto projetoSelecionado = (Projeto) selectionProjetos;
             getProjetoDAO().remover(projetoSelecionado);
+            JOptionPane.showMessageDialog(null, "Cadastro de projeto removido com sucesso!");
         }
         return null;
     }
@@ -398,7 +406,7 @@ public class Main {
     ////////////////////////////////
 
     public static void chamaMenuInstituicoes() throws SQLException, ClassNotFoundException {
-        while (true) {
+
             String[] opcoesMenuInstituicoes = {"Cadastrar", "Alterar", "Excluir", "Gerar relatório", "Voltar"};
             int menuInstituicoes = JOptionPane.showOptionDialog(null, "Escolha o processo que deseja realizar",
                     "INSTITUIÇÕES",
@@ -409,6 +417,7 @@ public class Main {
                     Instituicao instituicaoCriada = chamaCadastroInstituicao();
                     if (instituicaoCriada != null) {
                         JOptionPane.showMessageDialog(null, "Instituição " + instituicaoCriada.getNome() + " cadastrada com sucesso!");
+                        chamaMenuInstituicoes();
                     }
                     break;
                 case 1:
@@ -418,19 +427,20 @@ public class Main {
                     break;
                 case 2:
                     Instituicao instituicaoExcluida = chamaExcluirInstituicao();
-                    JOptionPane.showMessageDialog(null, "Instituição " + instituicaoExcluida.getNome() + " excluída com sucesso!");
-                    chamaMenuPrincipal();
+                    if(instituicaoExcluida != null) {
+                        JOptionPane.showMessageDialog(null, "Instituição " + instituicaoExcluida.getNome() + " excluída com sucesso!");
+                    }
+                    chamaMenuInstituicoes();
                     break;
                 case 3:
                     chamaRelatorioInstituicao();
-                    chamaMenuPrincipal();
                     break;
                 case 4:
                     chamaMenuPrincipal();
                     break;
             }
         }
-    }
+
     private static Instituicao chamaCadastroInstituicao() throws SQLException, ClassNotFoundException {
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome do instituicao");
@@ -474,21 +484,6 @@ public class Main {
           chamaMenuPrincipal();
        }
 
-//        List<RedeSocial> redeSociais = getRedeSocialDAO().buscarTodos();
-//
-//        if (redeSociais.isEmpty()) {
-//            JOptionPane.showMessageDialog(null, "Nenhuma Rede Social cadastrada!");
-//
-//        }
-//        Object[] selectionRedeSocial = redeSociais.stream().map(RedeSocial::getDescricao).toArray();
-//        String initialSelectionRedeSocial = (String) selectionRedeSocial[0];
-//        Object selecRede = JOptionPane.showInputDialog(null, "Selecione a Rede Social",
-//                "Redes Sociais", JOptionPane.QUESTION_MESSAGE, null, selectionRedeSocial, initialSelectionRedeSocial);
-//
-//        if (selecRede == null) {
-//            JOptionPane.showMessageDialog(null, "Cadastro de Instituição cancelado.");
-//            chamaMenuPrincipal();
-//        }
 
 
         Instituicao instituicao = new Instituicao();
@@ -497,7 +492,6 @@ public class Main {
         instituicao.setBairro(bairro);
         instituicao.setNumero(numero);
         instituicao.setTelefone(telefone);
-
         instituicao.setCidade(cidades.get(0));
         getInstituicaoDAO().salvar(instituicao);
 
@@ -508,11 +502,12 @@ public class Main {
         Object[] selectionValuesInstituicao = getInstituicaoDAO().findInstituicaoInArray();
         String initialSelectionInstituicao = (String) selectionValuesInstituicao[0];
         Object selectionInstituicao = JOptionPane.showInputDialog(null, "Selecione a Instituição que deseja alterar",
-                "Instituições", JOptionPane.QUESTION_MESSAGE, null, selectionValuesInstituicao, selectionValuesInstituicao);
+                "Instituições", JOptionPane.QUESTION_MESSAGE, null, selectionValuesInstituicao, initialSelectionInstituicao);
+
         List<Instituicao> instituicaos = getInstituicaoDAO().buscarPorNome((String) selectionInstituicao);
         Instituicao instituicao = instituicaos.get(0);
 
-        String nome = JOptionPane.showInputDialog(null, "Informe o nome da Instituicao", instituicaos.stream().map(Instituicao::getNome).toArray());
+        String nome = JOptionPane.showInputDialog(null, "Informe o nome da Instituicao", instituicao.getNome());
         if (nome == null) {
             chamaMenuPrincipal();
         }
@@ -556,16 +551,6 @@ public class Main {
             JOptionPane.showMessageDialog(null, "Nenhuma Rede Social cadastrada!");
 
         }
-        Object[] selectionRedeSocial = redeSociais.stream().map(RedeSocial::getDescricao).toArray();
-        String initialSelectionRedeSocial = (String) selectionRedeSocial[0];
-        Object selecRede = JOptionPane.showInputDialog(null, "Selecione a Rede Social",
-                "Redes Sociais", JOptionPane.QUESTION_MESSAGE, null, selectionRedeSocial, initialSelectionRedeSocial);
-
-        if (selecRede == null) {
-            JOptionPane.showMessageDialog(null, "Alteração de Instituição cancelada.");
-            chamaMenuPrincipal();
-        }
-
 
 
         instituicao.setNome(nome);
@@ -576,10 +561,11 @@ public class Main {
 
         instituicao.setCidade(cidades.get(0));
 
+        getInstituicaoDAO().salvar(instituicao);
 
         JOptionPane.showMessageDialog(null, "instituição alterada com sucesso!");
         chamaMenuPrincipal();
-        getInstituicaoDAO().salvar(instituicao);
+
 
         return instituicao;
 
@@ -587,13 +573,28 @@ public class Main {
 
     private static Instituicao chamaExcluirInstituicao() throws SQLException, ClassNotFoundException {
 
-        Object[] selectionValuesInstituicao = getInstituicaoDAO().buscarTodos().toArray(new Instituicao[0]);
+        Object[] selectionValuesInstituicao = getInstituicaoDAO().buscarTodos().stream().map(p -> p.getNome()).collect(Collectors.toList()).toArray();
         Object selectionInstituicao = JOptionPane.showInputDialog(null, "Selecione a Instituição que deseja remover:",
                 "Remover Instituição", JOptionPane.DEFAULT_OPTION, null, selectionValuesInstituicao, null);
 
         if (selectionInstituicao != null) {
-            Instituicao instituicaoSelecionada = (Instituicao) selectionInstituicao;
-            getInstituicaoDAO().remover(instituicaoSelecionada);
+            String nomeInstituicaoSelecionada = (String) selectionInstituicao;
+            Instituicao instituicaoSelecionada = null;
+
+            List<Instituicao> instituicoes = getInstituicaoDAO().buscarTodos();
+            for (Instituicao instituicao : instituicoes) {
+                if (instituicao.getNome().equals(nomeInstituicaoSelecionada)) {
+                    instituicaoSelecionada = instituicao;
+                    break;
+                }
+            }
+
+            if (instituicaoSelecionada != null) {
+                getInstituicaoDAO().remover(instituicaoSelecionada);
+                JOptionPane.showMessageDialog(null, "Cadastro de instituição removido com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Não foi possível encontrar a instituição selecionada.");
+            }
         }
         return null;
     }
@@ -604,7 +605,7 @@ public class Main {
     }
 
     public static void chamaMenuRedesSociais() throws SQLException, ClassNotFoundException {
-        while (true) {
+
             String[] opcoesMenuRedesSociais = {"Cadastrar", "Alterar", "Excluir", "Gerar relatório", "Voltar"};
             int menuRede = JOptionPane.showOptionDialog(null, "Escolha o processo que deseja realizar",
                     "Rede Social",
@@ -615,6 +616,7 @@ public class Main {
                     RedeSocial redeSocialCriada = chamaCadastroRedeSocial();
                     if (redeSocialCriada != null) {
                         JOptionPane.showMessageDialog(null, "Rede Social " + redeSocialCriada.getDescricao() + " cadastrada com sucesso!");
+                       chamaMenuPrincipal();
                     }
                     break;
                 case 1:
@@ -629,14 +631,14 @@ public class Main {
                     break;
                 case 3:
                     chamaRelatorioRedeSocial();
-                    chamaMenuPrincipal();
+
                     break;
                 case 4:
                     chamaMenuPrincipal();
                     break;
             }
         }
-    }
+
 
     private static RedeSocial chamaCadastroRedeSocial() throws SQLException, ClassNotFoundException {
 
@@ -645,14 +647,14 @@ public class Main {
             chamaMenuPrincipal();
         }
 
-        List<Instituicao> instituicaos = getInstituicaoDAO().buscarTodos();
+        List<Instituicao> instituicoes = getInstituicaoDAO().buscarTodos();
 
-        if (instituicaos.isEmpty()) {
+        if (instituicoes.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Nenhuma instituição cadastrada!");
             chamaMenuPrincipal();
         }
 
-        Object[] selectionInstituicao = instituicaos.stream().map(Instituicao::getNome).toArray();
+        Object[] selectionInstituicao = instituicoes.stream().map(Instituicao::getNome).toArray();
         String initialSelectionInstituicao = (String) selectionInstituicao[0];
 
         Object selecInstituicao = JOptionPane.showInputDialog(null, "Selecione a instituição",
@@ -663,13 +665,29 @@ public class Main {
             chamaMenuPrincipal();
         }
 
+        // Encontra a instituição selecionada
+        String nomeInstituicaoSelecionada = (String) selecInstituicao;
+        Instituicao instituicaoSelecionada = null;
+
+        for (Instituicao instituicao : instituicoes) {
+            if (instituicao.getNome().equals(nomeInstituicaoSelecionada)) {
+                instituicaoSelecionada = instituicao;
+                break;
+            }
+        }
+
+        if (instituicaoSelecionada == null) {
+            JOptionPane.showMessageDialog(null, "Instituição selecionada não encontrada.");
+            chamaMenuPrincipal();
+        }
+
         RedeSocial redeSocial = new RedeSocial();
         redeSocial.setDescricao(nome);
-        redeSocial.setCodigoInstituicao(instituicaos.get(0).getCodigo());
+        redeSocial.setCodigoInstituicao(instituicaoSelecionada.getCodigo());
 
         getRedeSocialDAO().salvar(redeSocial);
-        return redeSocial;
 
+        return redeSocial;
     }
     private static RedeSocial chamaAlterarRedeSocial() throws SQLException, ClassNotFoundException {
         Object[] selectionValuesRedeSocial = getRedeSocialDAO().findRedesSociaisInArray();
@@ -696,8 +714,8 @@ public class Main {
                 "Remover Rede Social", JOptionPane.DEFAULT_OPTION, null, selectionValuesRedesSociais, null);
 
         if (selectionRedesSociais != null) {
-            RedeSocial redeSocialSelecionada = (RedeSocial) selectionRedesSociais;
-            getRedeSocialDAO().remover(redeSocialSelecionada);
+           List <RedeSocial> redesSociais =  getRedeSocialDAO().buscarPorNome((String) selectionRedesSociais );
+            getRedeSocialDAO().remover(redesSociais.get(0));
 
             JOptionPane.showMessageDialog(null, "Rede Social removida com sucesso!");
             chamaMenuPrincipal();
@@ -707,7 +725,7 @@ public class Main {
 
     static void chamaRelatorioRedeSocial() {
         List<RedeSocial> redeSocials = getRedeSocialDAO().buscarTodos();
-       // RelatorioRedeSocialForm.emitirRelatorio(redeSocials);
+        RelatorioRedeSocialForm.emitirRelatorio(redeSocials);
     }
 
     public static ProjetoDAO getProjetoDAO() {

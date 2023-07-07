@@ -51,7 +51,7 @@ public class TableProjeto extends AbstractTableModel {
             case INDEX_COORDENACAO:
                 return registroInstituicao.getCoordenacao();
             case INDEX_INSTITUICAO:
-                return registroInstituicao.getInstituicao();
+                return registroInstituicao.getInstituicao().getNome();
             case INDEX_TIPO:
                 return registroInstituicao.getTipo();
             case INDEX_CATEGORIA:
