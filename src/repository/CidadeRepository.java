@@ -2,6 +2,7 @@ package repository;
 
 import model.Cidade;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +109,7 @@ public class CidadeRepository extends Conectora {
                 " WHERE cd_cidade = ?");
         stmt.setInt(1, cidade.getId().intValue());
         stmt.executeUpdate();
+        System.out.println("removido");
         connection.close();
     }
 }

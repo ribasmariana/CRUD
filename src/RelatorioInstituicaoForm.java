@@ -16,7 +16,7 @@ public class RelatorioInstituicaoForm extends JPanel {
     private static final long serialVersionUID = 1L;
 
     public static final String[] nomeColunas =
-            {"Código", "Nome", "Rua", "Bairro", "Número","Telefone","Redes Sociais",""};
+            {"Código", "Nome", "Rua", "Bairro", "Número","Telefone","Redes Sociais","Cidade"};
 
     protected JTable table;
     protected JScrollPane scroller;

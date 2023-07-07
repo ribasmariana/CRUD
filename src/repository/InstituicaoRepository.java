@@ -50,12 +50,6 @@ public class InstituicaoRepository extends Conectora {
             instituicao.setCidade(cidadeRepository.buscaPorId(resultSet.getInt(7)).get(0));
 
 
-        //    RedeSocialRepository redeSocialRepository = new RedeSocialRepository();
-
-           // instituicao.setRedeSocial(redeSocialRepository.buscaPorId(resultSet.getLong(8)).get(0));
-
-
-
 
             instituicoes.add(instituicao);
         }
@@ -107,15 +101,14 @@ public class InstituicaoRepository extends Conectora {
         Connection connection = getConnection();
 
         PreparedStatement stmt = connection.prepareStatement("update instituicao " +
-                "SET nome = ?, rua = ?, bairro = ?, numero = ?, telefone = ?, cidade = ?,redeSocial = ? WHERE id = ?");
+                "SET nome = ?, rua = ?, bairro = ?, numero = ?, telefone = ?, cd_cidade = ? WHERE cd_instituicao = ?");
         stmt.setString(1, instituicao.getNome());
         stmt.setString(2, instituicao.getRua());
         stmt.setString(3, instituicao.getBairro());
         stmt.setString(4, instituicao.getNumero());
         stmt.setString(5, instituicao.getTelefone());
-        stmt.setObject(6, instituicao.getCidade());
-        stmt.setObject(7,  instituicao.getRedesSociais());
-        stmt.setInt(8, instituicao.getCodigo());
+        stmt.setObject(6, instituicao.getCidade().getId());
+        stmt.setInt(7, instituicao.getCodigo());
 
 
         int i = stmt.executeUpdate();
@@ -125,8 +118,9 @@ public class InstituicaoRepository extends Conectora {
     public void delete(Instituicao instituicao) throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
         PreparedStatement stmt = connection.prepareStatement("DELETE FROM instituicao" +
-                " WHERE id = ?");
+                " WHERE cd_instituicao = ?");
         stmt.setInt(1, instituicao.getCodigo());
+
         stmt.executeUpdate();
         connection.close();
     }

@@ -1,13 +1,13 @@
 package repository;//ISTO SERÁ UMA ENUM
 
 public enum TipoProjeto {
-    PESQUISA(1,"Pesquisa"),
-    EXTENSAO(2,"Extensão"),
-    GRADUACAO(3,"Graduação"),
-    POS_GRADUACAO(4,"Pós graduação"),
-    MESTRADO(5,"Mestrado"),
-    DOUTORADO(6,"Doutorado"),
-    STARTUP(7,"Startup");
+    PESQUISA(0,"Pesquisa"),
+    EXTENSAO(1,"Extensão"),
+    GRADUACAO(2,"Graduação"),
+    POS_GRADUACAO(3,"Pós graduação"),
+    MESTRADO(4,"Mestrado"),
+    DOUTORADO(5,"Doutorado"),
+    STARTUP(6,"Startup");
 
     private String descricaoTipo;
     private Integer codigo;
@@ -34,19 +34,19 @@ public enum TipoProjeto {
     }
 
     public static TipoProjeto getTipoById(Integer opcao) {
-        if (opcao == 1) {
+        if (opcao == 0) {
             return PESQUISA;
-        } else if (opcao == 2) {
+        } else if (opcao == 1) {
             return EXTENSAO;
-        }  else if (opcao == 3) {
+        }  else if (opcao == 2) {
             return GRADUACAO;
-        }  else if (opcao == 4) {
+        }  else if (opcao == 3) {
              return POS_GRADUACAO;
-        }  else if (opcao == 5) {
+        }  else if (opcao == 4) {
              return MESTRADO;
-        }  else if (opcao == 6) {
+        }  else if (opcao == 5) {
              return DOUTORADO;
-            } else if (opcao == 7){
+            } else if (opcao == 6){
             return STARTUP;
         }else {
             return null;
