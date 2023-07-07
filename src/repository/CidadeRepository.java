@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static repository.CidadeDAO.cidades;
+
 
 public class CidadeRepository extends Conectora {
 
@@ -26,6 +26,7 @@ public class CidadeRepository extends Conectora {
     }
 
     public List<Cidade> buscaPorId(Integer id) throws SQLException, ClassNotFoundException {
+        List<Cidade> cidades = new ArrayList<>();
         List<Cidade> pessoas = new ArrayList<>();
         Connection connection = getConnection();
 
@@ -50,6 +51,7 @@ public class CidadeRepository extends Conectora {
     }
 
     public List<Cidade> busca() throws SQLException, ClassNotFoundException {
+        List<Cidade> cidades = new ArrayList<>();
         List<Cidade> cidades1 = new ArrayList<>();
         Connection connection = getConnection();
 
@@ -87,7 +89,7 @@ public class CidadeRepository extends Conectora {
         Connection connection = getConnection();
 
         PreparedStatement stmt = connection.prepareStatement("update cidade " +
-                "SET  nome = ?, uf = ? WHERE id = ?");
+                "SET  nome = ?, uf = ? WHERE cd_cidade = ?");
 
         stmt.setString(1, cidade.getNome());
         stmt.setString(2, cidade.getUf());
@@ -103,7 +105,7 @@ public class CidadeRepository extends Conectora {
     public void delete(Cidade cidade) throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
         PreparedStatement stmt = connection.prepareStatement("DELETE FROM cidade" +
-                " WHERE id = ?");
+                " WHERE cd_cidade = ?");
         stmt.setInt(1, cidade.getId().intValue());
         stmt.executeUpdate();
         connection.close();

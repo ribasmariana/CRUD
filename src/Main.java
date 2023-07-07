@@ -6,6 +6,7 @@ import repository.*;
 import javax.swing.*;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
@@ -146,16 +147,16 @@ public class Main {
     }
 
     private static Cidade chamaExcluirCidade() throws SQLException, ClassNotFoundException {
-        Object[] selectionValuesCidades = getCidadeDAO().buscarTodos().toArray(new Cidade[0]);
+        Object[] selectionValuesCidades = getCidadeDAO().buscarTodos().stream().map(cid -> cid.getNome()).collect(Collectors.toList()).toArray();
         Object selectionCidades = JOptionPane.showInputDialog(null, "Selecione a cidade que deseja remover:",
                 "Remover Cidade", JOptionPane.DEFAULT_OPTION, null, selectionValuesCidades, null);
 
         if (selectionCidades != null) {
-            Cidade cidadeSelecionada = (Cidade) selectionCidades;
-            getCidadeDAO().remover(cidadeSelecionada);
+            List<Cidade> cidades = getCidadeDAO().buscarPorNome((String) selectionCidades);
+            getCidadeDAO().remover(cidades.get(0));
 
             JOptionPane.showMessageDialog(null, "Cidade removida com sucesso!");
-            return cidadeSelecionada;
+            return cidades.get(0);
         }
         chamaMenuPrincipal(); // Chama o menu principal quando o usuário clicar em "Cancelar"
         return null;
@@ -211,17 +212,17 @@ public class Main {
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome do projeto");
         if (nome == null) {
-            chamaCadastroProjeto();
+            chamaMenuPrincipal();
         }
 
         String descricao = JOptionPane.showInputDialog(null, "Informe a descrição do projeto");
         if (descricao == null) {
-            chamaCadastroProjeto();
+            chamaMenuPrincipal();
         }
 
         String coordenacao = JOptionPane.showInputDialog(null, "Informe o nome do responsável pelo projeto");
         if (coordenacao == null) {
-            chamaCadastroProjeto();
+            chamaMenuPrincipal();
         }
 
         TipoProjeto[] tipoProjetos = TipoProjeto.values();
@@ -299,17 +300,17 @@ public class Main {
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome do projeto", projeto.getNome());
         if (nome == null) {
-            chamaCadastroProjeto();
+            chamaMenuPrincipal();
         }
 
         String descricao = JOptionPane.showInputDialog(null, "Informe a descrição do projeto", projeto.getDescricao());
         if (descricao == null) {
-            chamaCadastroProjeto();
+            chamaMenuPrincipal();
         }
 
         String coordenacao = JOptionPane.showInputDialog(null, "Informe o nome do responsável pelo projeto", projeto.getCoordenacao());
         if (coordenacao == null) {
-            chamaCadastroProjeto();
+            chamaMenuPrincipal();
         }
 
         TipoProjeto[] tipoProjetos = TipoProjeto.values();
@@ -432,25 +433,25 @@ public class Main {
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome do instituicao");
         if (nome == null) {
-            chamaCadastroInstituicao();
+            chamaMenuPrincipal();
         }
 
         String rua = JOptionPane.showInputDialog(null, "Informe a rua da instituição");
         if (rua == null) {
-            chamaCadastroInstituicao();
+            chamaMenuPrincipal();
         }
 
         String bairro = JOptionPane.showInputDialog(null, "Informe o nome do bairro da instituição");
         if (bairro == null) {
-            chamaCadastroInstituicao();
+            chamaMenuPrincipal();
         }
         String numero = JOptionPane.showInputDialog(null, "Informe o número da instituição");
         if (numero == null) {
-            chamaCadastroInstituicao();
+            chamaMenuPrincipal();
         }
         String telefone = JOptionPane.showInputDialog(null, "Informe o telefone da instituição");
         if (telefone == null) {
-            chamaCadastroInstituicao();
+            chamaMenuPrincipal();
         }
 
 
@@ -511,25 +512,25 @@ public class Main {
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome da Instituicao", instituicaos.stream().map(Instituicao::getNome).toArray());
         if (nome == null) {
-            chamaCadastroInstituicao();
+            chamaMenuPrincipal();
         }
 
         String rua = JOptionPane.showInputDialog(null, "Informe a rua da instituição", instituicao.getRua());
         if (rua == null) {
-        chamaCadastroInstituicao();
+        chamaMenuPrincipal();
         }
 
         String bairro = JOptionPane.showInputDialog(null, "Informe o nome do bairro da instituição", instituicao.getBairro());
         if (bairro == null) {
-            chamaCadastroInstituicao();
+            chamaMenuPrincipal();
         }
         String numero = JOptionPane.showInputDialog(null, "Informe o número da instituição",instituicao.getNumero());
         if (numero == null) {
-            chamaCadastroInstituicao();
+            chamaMenuPrincipal();
         }
         String telefone = JOptionPane.showInputDialog(null, "Informe o telefone da instituição",instituicao.getTelefone());
         if (telefone == null) {
-            chamaCadastroInstituicao();
+            chamaMenuPrincipal();
         }
 
         List<Cidade> cidades = getCidadeDAO().buscarTodos();
@@ -639,7 +640,7 @@ public class Main {
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome da RedeSocial");
         if (nome == null) {
-            chamaCadastroRedeSocial();
+            chamaMenuPrincipal();
         }
 
         List<Instituicao> instituicaos = getInstituicaoDAO().buscarTodos();
@@ -678,7 +679,7 @@ public class Main {
 
         String nome = JOptionPane.showInputDialog(null, "Informe o nome da Rede Social", redeSocial.getDescricao());
         if (nome == null) {
-            chamaCadastroCidade();
+            chamaMenuPrincipal();
         }
 
         redeSocial.setDescricao(nome);

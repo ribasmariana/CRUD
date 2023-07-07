@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class CidadeDAO implements IGenericDAO<Cidade>{
 
-    static List<Cidade> cidades = new ArrayList<>();
+    //static List<Cidade> cidades = new ArrayList<>();
 
 
     public CidadeDAO() {
@@ -29,7 +29,7 @@ public final class CidadeDAO implements IGenericDAO<Cidade>{
             throw new RuntimeException(e);
         }
 
-        cidades.add(cidade);
+      //  cidades.add(cidade);
 
     }
 
@@ -40,6 +40,7 @@ public final class CidadeDAO implements IGenericDAO<Cidade>{
     }
     @Override
     public List<Cidade> buscarTodos() {
+        List<Cidade> cidades = new ArrayList<>();
         System.out.println(cidades);
 
         CidadeRepository cidadeRepository = new CidadeRepository();
@@ -53,6 +54,7 @@ public final class CidadeDAO implements IGenericDAO<Cidade>{
     }
     @Override
     public List<Cidade> buscarPorNome(String nome) {
+        List<Cidade> cidades = buscarTodos();
         List<Cidade> cidadesFiltradas = new ArrayList<>();
         for (Cidade cidade : cidades) {
             if (cidade.getNome().contains(nome)) {
