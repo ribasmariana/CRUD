@@ -17,7 +17,6 @@ public final class InstituicaoDAO implements IGenericDAO<Instituicao> {
             if (instituicao.getCodigo() != null) {
                 instituicaoRepository.update(instituicao);
             } else {
-                instituicao.setCodigo((int) instituicaoRepository.proximoId().longValue());
                 instituicaoRepository.insere(instituicao);
             }
         } catch (SQLException | ClassNotFoundException e) {
